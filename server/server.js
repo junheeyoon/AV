@@ -6,7 +6,8 @@ var connection = mysql.createConnection({
     user : 'root',
     password : '1234',
     database : 'voice',
-    host : '54.183.138.146'    
+    host : '54.183.138.146',
+    timeout: 60000    
 });
 connection.connect();
 server.use(bodyParser.urlencoded({ extended: false }));
@@ -18,7 +19,7 @@ server.use(bodyParser.json());
 */
 server.get('/voice/', function (req, res, next) {
     console.log(1);
-    connection.query('SELECT * FROM family', function(err, result, fields){
+    connection.query('SELECT * FROM family;', function(err, result, fields){
         if(err){
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");

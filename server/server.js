@@ -3,14 +3,19 @@ var server = express();
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
 var connection = mysql.createConnection({
-    host : '54.183.138.146',
-    user : 'ec2-user',
-    password : '1234',
-    database : 'voice',
+    // host : '54.183.138.146',
+    // user : 'ec2-user',
+    // password : '1234',
+    // database : 'voice',
+    host     : '54.183.138.146',
+    user     : 'ec2-user',
+    port     : 3306,
+    database : 'voice'
+
 });
 connection.connect(function(error){
     if(error){
-        console.log('Error');
+        console.log(error);
     }
     else{
         console.log('Connected');
@@ -31,13 +36,14 @@ server.get('/voice/', function (req, res, next) {
             console.log("쿼리문에 오류가 있습니다.");
         }
         else{
+            console.log('succee');
             console.log(result);
             res.json(result);
         }
     });
 }); 
 
-server.listen(3000, function () {
+server.listen(3306, function () {
     console.log('Example app listening on port 3000!');
 });
 

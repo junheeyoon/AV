@@ -3,14 +3,13 @@ var server = express();
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
 var connection = mysql.createConnection({
-    host : 'localhost',
-    user : 'root',
+    host : '54.183.138.146',
+    user : 'ec2-user',
     password : '1234',
-    port : 3306,
     database : 'voice',
 });
 connection.connect(function(error){
-    if(!!error){
+    if(error){
         console.log('Error');
     }
     else{
@@ -26,7 +25,7 @@ server.use(bodyParser.json());
 */
 server.get('/voice/', function (req, res, next) {
     console.log(1);
-    connection.query('SELECT * FROM Persons;', function(err, result, fields){
+    connection.query("SELECT * FROM family", function(err, result, fields){
         if(err){
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");

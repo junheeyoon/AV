@@ -7,9 +7,8 @@ var connection = mysql.createConnection({
     // user : 'ec2-user',
     // password : '1234',
     // database : 'voice',
-    host     : '54.183.138.146',
-    user     : 'ec2-user',
-    port     : 3306,
+    user     : 'localhost',
+    password : '1234',
     database : 'voice'
 
 });

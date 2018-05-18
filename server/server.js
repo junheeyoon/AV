@@ -1,25 +1,13 @@
 var express = require('express');
 var server = express();
-var cors = require('cors');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
-var length;
 var connection = mysql.createConnection({
     user : 'root',
     password : '1234',
     database : 'vocie',
     host : '54.183.138.146'
 });
-server.use(cors());
-server.get('/products/:id', function (req, res, next) {
-  res.json({msg: 'This is CORS-enabled for all origins!'})
-});
-server.all('/*', function (req,res,next) {
-  res.header("Access-Control-Allow-Origen", "*"); 
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();  
-})
-server.use(express.static('public'));
 
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
@@ -29,22 +17,29 @@ server.use(bodyParser.json());
 });
 */
 server.get('/voice/', function (req, res, next) {
-    connection.query("SELECT * FROM family;", function(err, result, fields){
+    console.log(1);
+    connection.query('SELECT * FROM family;', function(err, result, fields){
         if(err){
             console.log("쿼리문에 오류가 있습니다.");
         }
         else{
+            console.log(result);
             res.json(result);
         }
     });
 }); 
 
-server.run = function () {
-    server.listen(3000, function () {
-        console.log('Example app listening on port 3000!');
-    });
-};
+server.listen(3000, function () {
+    console.log('Example app listening on port 3000!');
+});
+
 module.exports = server;
+// server.run = function () {
+//     server.listen(3000, function () {
+//         console.log('Example app listening on port 3000!');
+//     });
+// };
+// module.exports = server;
 // server.get('/user/:id', function (req, res) {
 
 //     for (var i = 0; i < db1.userlist.length; i++){

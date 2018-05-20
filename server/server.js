@@ -72,29 +72,53 @@ server.get('/password/:user_id', function (req, res, next) {
 });
 
 server.post('/user/', function (req, res, next) {
-    connection.query("SELECT * FROM family", function(err, result, fields){
+    var body = req.body;
+    connection.query("INSERT INTO user SET ?", body, function(err, result, fields){
         if(err){
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");
+            res.json({
+                result : {
+                        isOk : false, 
+                        error : "쿼리문에 오류가 있습니다."
+                }
+            });
         }
         else{
             console.log('Access');
             console.log(result);
-            res.json(result);
+            res.json({
+                result : {
+                        isOk : true, 
+                        message : '사용자가 등록되었습니다.'
+                }
+            });
         }
     });
 }); 
 
 server.post('/device/', function (req, res, next) {
-    connection.query("SELECT * FROM family", function(err, result, fields){
+    var body = req.body;
+    connection.query("INSERT INTO user SET ?", body, function(err, result, fields){
         if(err){
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");
+            res.json({
+                result : {
+                        isOk : false, 
+                        error : "쿼리문에 오류가 있습니다."
+                }
+            });
         }
         else{
             console.log('Access');
             console.log(result);
-            res.json(result);
+            res.json({
+                result : {
+                        isOk : true, 
+                        message : '디바이스가 등록되었습니다.'
+                }
+            });
         }
     });
 });
@@ -102,6 +126,8 @@ server.post('/device/', function (req, res, next) {
 server.delete('/user/:user_id', function (req, res, next) {
     connection.query("DELETE * FROM user WHERE user_id = ?", req.params.user_id, function(err, result, fields){
         if(err){
+            console.log(err);
+            console.log("쿼리문에 오류가 있습니다.");
             res.json({
                 result : {
                         isOk : false, 
@@ -126,6 +152,8 @@ server.delete('/user/:user_id', function (req, res, next) {
 server.delete('/device/:device_id', function (req, res, next) {
     connection.query("DELETE * FROM object WHERE device_id = ?", req.params.device_id, function(err, result, fields){
         if(err){
+            console.log(err);
+            console.log("쿼리문에 오류가 있습니다.");
             res.json({
                 result : {
                         isOk : false, 

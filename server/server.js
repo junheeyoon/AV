@@ -42,8 +42,8 @@ server.get('/voice/', function (req, res, next) {
     });
 });
 
-server.get('/state/', function (req, res, next) {
-    connection.query("SELECT * FROM object", function(err, result, fields){
+server.get('/state/:device_id', function (req, res, next) {
+    connection.query("SELECT * FROM object WHERE device_id = ?", req.params.device_id, function(err, result, fields){
         if(err){
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");
@@ -51,13 +51,14 @@ server.get('/state/', function (req, res, next) {
         else{
             console.log('Access');
             console.log(result);
-            res.json(result);
+            res.json(result.state);
         }
     });
 });
 
-server.get('/password/', function (req, res, next) {
-    connection.query("SELECT * FROM object", function(err, result, fields){
+server.get('/password/:user_id', function (req, res, next) {
+    
+    connection.query("SELECT * FROM user WHERE user_id = ?", req.params.user_id, function(err, result, fields){
         if(err){
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");
@@ -65,7 +66,7 @@ server.get('/password/', function (req, res, next) {
         else{
             console.log('Access');
             console.log(result);
-            res.json(result);
+            res.json(result.password);
         }
     });
 });

@@ -27,6 +27,7 @@ server.use(bodyParser.json());
     res.sendFile('C:\Users\XNOTE\grap-bot-rps\11.html');
 });
 */
+
 server.get('/voice/', function (req, res, next) {
     connection.query("SELECT * FROM family", function(err, result, fields){
         if(err){
@@ -39,7 +40,22 @@ server.get('/voice/', function (req, res, next) {
             res.json(result);
         }
     });
-}); 
+});
+
+server.get('/state/', function (req, res, next) {
+    connection.query("SELECT * FROM object", function(err, result, fields){
+        if(err){
+            console.log(err);
+            console.log("쿼리문에 오류가 있습니다.");
+        }
+        else{
+            console.log('Access');
+            console.log(result);
+            res.json(result);
+        }
+    });
+});
+
 server.put('/state/', function (req, res, next) {
     var i = 0;
     var body = req.body;

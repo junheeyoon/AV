@@ -58,6 +58,7 @@ server.get('/state/', function (req, res, next) {
 
 server.put('/state/', function (req, res, next) {
     var i = 0;
+    var name;
     var body = req.body;
     connection.query("SELECT * FROM object", function(err, result, fields){
         if(err){
@@ -68,13 +69,40 @@ server.put('/state/', function (req, res, next) {
             console.log('Access');
             console.log(result);
             for(i = 0; i < result.length; i++){
-                if(result[i].name == body.commend){
-                    res.json({
-                        result : {
-                                isOk : true, 
-                                state : result[i].state
-                        }
-                    });
+                name = body.name.indexOf(result[i].name);
+                if(parseInt(name) !== -1){
+                    if(parseInt(body.name.indexOf('켜')) !== -1){
+                        connection.query("UPDATE object SET state = 1 WHERE name = ?", result[i].name, function(error, rows){ 
+                            if(error){ 
+                                throw error;
+                            }	
+                            else{ 
+                                console.log(rows); 
+                            } 
+                        });
+                        res.json({
+                            result : {
+                                    isOk : true, 
+                                    state : result[i].state
+                            }
+                        });
+                    }
+                    if(parseInt(body.name.indexOf('꺼')) !== -1){
+                        connection.query("UPDATE object SET state = 0 WHERE name = ?", result[i].name, function(error, rows){ 
+                            if(error){ 
+                                throw error;
+                            }	
+                            else{ 
+                                console.log(rows); 
+                            } 
+                        });
+                        res.json({
+                            result : {
+                                    isOk : true, 
+                                    state : result[i].state
+                            }
+                        });
+                    }
                 }
             }
             res.json({

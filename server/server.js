@@ -82,7 +82,8 @@ server.put('/state/', function (req, res, next) {
                         });
                         res.json({
                             result : {
-                                    isOk : true, 
+                                    isOk : true,
+                                    name :  result[i].name, 
                                     state : result[i].state
                             }
                         });
@@ -98,7 +99,8 @@ server.put('/state/', function (req, res, next) {
                         });
                         res.json({
                             result : {
-                                    isOk : true, 
+                                    isOk : true,
+                                    name :  result[i].name,
                                     state : result[i].state
                             }
                         });

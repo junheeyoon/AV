@@ -23,11 +23,6 @@ connection.connect(function(error){
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
 
-/*server.get('/', (req, res) => {
-    res.sendFile('C:\Users\XNOTE\grap-bot-rps\11.html');
-});
-*/
-
 server.get('/voice/', function (req, res, next) {
     connection.query("SELECT * FROM family", function(err, result, fields){
         if(err){
@@ -345,10 +340,3 @@ module.exports = server;
 //     })
 //     //db.push(body);
 // });
-//서버 실행 함수
-
-/*function custonSort(a, b) {
-  if(a.id == b.id){ return 0} return  a.id > b.id ? 1 : -1;
-}
-db.sort(custonSort);
-*/

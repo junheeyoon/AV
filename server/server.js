@@ -28,21 +28,50 @@ server.use(bodyParser.json());
 });
 */
 server.get('/voice/', function (req, res, next) {
-    console.log(1);
     connection.query("SELECT * FROM family", function(err, result, fields){
         if(err){
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");
         }
         else{
-            console.log('succee');
+            console.log('Access');
             console.log(result);
             res.json(result);
         }
     });
 }); 
+server.put('/state/', function (req, res, next) {
+    var i = 0;
+    var body = req.body;
+    connection.query("SELECT * FROM object", function(err, result, fields){
+        if(err){
+            console.log(err);
+            console.log("쿼리문에 오류가 있습니다.");
+        }
+        else{
+            console.log('Access');
+            console.log(result);
+            for(i = 0; i < result.length; i++){
+                if(result[i].name == body.commend){
+                    res.json({
+                        result : {
+                                isOk : true, 
+                                state : result[i].state
+                        }
+                    });
+                }
+            }
+            res.json({
+                result : {
+                        isOk : false, 
+                        error : 'object가 존재하지 않습니다.'
+                }
+            });
+        }
+    });
+}); 
 
-server.listen(3306, function () {
+server.listen(3000, function () {
     console.log('Example app listening on port 3000!');
 });
 

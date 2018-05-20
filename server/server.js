@@ -196,12 +196,12 @@ server.put('/state/', function (req, res, next) {
                         res.json({
                             result : {
                                     isOk : true,
-                                    name :  result[i].name, 
+                                    device :  result[i].name, 
                                     state : result[i].state
                             }
                         });
                     }
-                    if(parseInt(body.name.indexOf('꺼')) !== -1){
+                    else if(parseInt(body.name.indexOf('꺼')) !== -1){
                         connection.query("UPDATE object SET state = 0 WHERE name = ?", result[i].name, function(error, rows){ 
                             if(error){ 
                                 throw error;
@@ -213,8 +213,16 @@ server.put('/state/', function (req, res, next) {
                         res.json({
                             result : {
                                     isOk : true,
-                                    name :  result[i].name,
+                                    device :  result[i].name,
                                     state : result[i].state
+                            }
+                        });
+                    }
+                    else {
+                        res.json({
+                            result : {
+                                    isOk : false, 
+                                    error : '명령을 확인해주세요.'
                             }
                         });
                     }

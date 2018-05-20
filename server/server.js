@@ -56,6 +56,76 @@ server.get('/state/', function (req, res, next) {
     });
 });
 
+server.get('/password/', function (req, res, next) {
+    connection.query("SELECT * FROM object", function(err, result, fields){
+        if(err){
+            console.log(err);
+            console.log("쿼리문에 오류가 있습니다.");
+        }
+        else{
+            console.log('Access');
+            console.log(result);
+            res.json(result);
+        }
+    });
+});
+
+server.post('/user/', function (req, res, next) {
+    connection.query("SELECT * FROM family", function(err, result, fields){
+        if(err){
+            console.log(err);
+            console.log("쿼리문에 오류가 있습니다.");
+        }
+        else{
+            console.log('Access');
+            console.log(result);
+            res.json(result);
+        }
+    });
+}); 
+
+server.post('/device/', function (req, res, next) {
+    connection.query("SELECT * FROM family", function(err, result, fields){
+        if(err){
+            console.log(err);
+            console.log("쿼리문에 오류가 있습니다.");
+        }
+        else{
+            console.log('Access');
+            console.log(result);
+            res.json(result);
+        }
+    });
+});
+
+server.delete('/user/', function (req, res, next) {
+    connection.query("SELECT * FROM family", function(err, result, fields){
+        if(err){
+            console.log(err);
+            console.log("쿼리문에 오류가 있습니다.");
+        }
+        else{
+            console.log('Access');
+            console.log(result);
+            res.json(result);
+        }
+    });
+}); 
+
+server.delete('/device/', function (req, res, next) {
+    connection.query("SELECT * FROM family", function(err, result, fields){
+        if(err){
+            console.log(err);
+            console.log("쿼리문에 오류가 있습니다.");
+        }
+        else{
+            console.log('Access');
+            console.log(result);
+            res.json(result);
+        }
+    });
+}); 
+
 server.put('/state/', function (req, res, next) {
     var i = 0;
     var name;

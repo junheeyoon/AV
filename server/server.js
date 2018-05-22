@@ -38,6 +38,7 @@ server.get('/voice/', function (req, res, next) {
 });
 
 server.get('/state/:device_id', function (req, res, next) {
+    res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     connection.query("SELECT * FROM object WHERE device_id = ?", req.params.device_id, function(err, result, fields){
         if(err){
             console.log(err);

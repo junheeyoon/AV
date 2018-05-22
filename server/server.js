@@ -189,10 +189,10 @@ server.put('/state/', function (req, res, next) {
             console.log('Access');
             console.log(result);
             for(i = 0; i < result.length; i++){
-                name = body.name.indexOf(result[i].name);
+                name = body.name.indexOf(result[i].object_name);
                 if(parseInt(name) !== -1){
                     if(parseInt(body.name.indexOf('켜')) !== -1){
-                        connection.query("UPDATE object SET state = 1 WHERE name = ?", result[i].name, function(error, rows){ 
+                        connection.query("UPDATE object SET state = 1 WHERE name = ?", result[i].object_name, function(error, rows){ 
                             if(error){ 
                                 throw error;
                             }	
@@ -203,13 +203,13 @@ server.put('/state/', function (req, res, next) {
                         res.json({
                             result : {
                                     isOk : true,
-                                    device :  result[i].name, 
-                                    state : result[i].state
+                                    device :  result[i].object_name, 
+                                    state : result[i].object_state
                             }
                         });
                     }
                     else if(parseInt(body.name.indexOf('꺼')) !== -1){
-                        connection.query("UPDATE object SET state = 0 WHERE name = ?", result[i].name, function(error, rows){ 
+                        connection.query("UPDATE object SET state = 0 WHERE name = ?", result[i].object_name, function(error, rows){ 
                             if(error){ 
                                 throw error;
                             }	
@@ -220,8 +220,8 @@ server.put('/state/', function (req, res, next) {
                         res.json({
                             result : {
                                     isOk : true,
-                                    device :  result[i].name,
-                                    state : result[i].state
+                                    device :  result[i].object_name,
+                                    state : result[i].object_state
                             }
                         });
                     }

@@ -173,6 +173,7 @@ server.put('/state/', function (req, res, next) {
     var i = 0;
     var name;
     var body = req.body;
+    res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     connection.query("SELECT * FROM object", function(err, result, fields){
         if(err){
             console.log(err);

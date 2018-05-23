@@ -35,12 +35,6 @@ import org.linphone.core.SubscriptionState;
 
 import java.nio.ByteBuffer;
 
-
-/**
- * Created by Mark Xu on 17/3/13.
- * LinphoneService
- */
-
 public class LinphoneService extends Service implements LinphoneCoreListener {
     private static final String TAG = "LinphoneService";
     private PendingIntent mKeepAlivePendingIntent;
@@ -159,10 +153,6 @@ public class LinphoneService extends Service implements LinphoneCoreListener {
         }
     }
 
-    /**
-     * 呼叫指定频道
-     * @param channel 频道
-     */
     private void callThroughMobile(String channel) {
 //        mChannel = channel;
 //        if (LinphoneManager.getLc().isIncall()) {
@@ -173,9 +163,6 @@ public class LinphoneService extends Service implements LinphoneCoreListener {
 //        callNowChannel();
     }
 
-    /**
-     * 呼叫当前所在频道
-     */
     private void callNowChannel() {
 //        if (!LinphoneManager.getLc().isIncall()) {
 //            if (!mChannel.equals("")) {

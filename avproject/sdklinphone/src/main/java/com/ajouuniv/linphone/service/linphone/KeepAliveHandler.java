@@ -5,12 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-
-/**
- * Created by Mark Xu on 17/3/13.
- * KeepAliveHandler
- */
-
 public class KeepAliveHandler extends BroadcastReceiver {
     private static final String TAG = "KeepAliveHandler";
     @Override

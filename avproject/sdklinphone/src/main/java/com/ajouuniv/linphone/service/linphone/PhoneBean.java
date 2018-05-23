@@ -1,10 +1,5 @@
 package com.ajouuniv.linphone.service.linphone;
 
-/**
- * Created by Mark Xu on 17/3/14.
- * sip 账号信息
- */
-
 public class PhoneBean {
     private String displayName;
     private String userName;

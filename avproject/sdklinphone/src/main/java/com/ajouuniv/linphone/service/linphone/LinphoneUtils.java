@@ -18,11 +18,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by Mark Xu on 17/3/13.
- * 语音通话工具类
- */
-
 public class LinphoneUtils {
     private static final String TAG = "LinphoneUtils";
     private static volatile LinphoneUtils sLinphoneUtils;
@@ -45,13 +40,6 @@ public class LinphoneUtils {
         mLinphoneCore.enableEchoLimiter(true);
     }
 
-    /**
-     * 注册到服务器
-     * @param name
-     * @param password
-     * @param host
-     * @throws LinphoneCoreException
-     */
     public void registerUserAuth(String name, String password, String host) throws LinphoneCoreException {
         Log.e(TAG, "registerUserAuth name = " + name);
         Log.e(TAG, "registerUserAuth pw = " + password);
@@ -100,9 +88,6 @@ public class LinphoneUtils {
         return call;
     }
 
-    /**
-     * 挂断电话
-     */
     public void hangUp() {
         LinphoneCall currentCall = mLinphoneCore.getCurrentCall();
         if (currentCall != null) {
@@ -114,18 +99,10 @@ public class LinphoneUtils {
         }
     }
 
-    /**
-     * 是否静音
-     * @param isMicMuted
-     */
     public void toggleMicro(boolean isMicMuted) {
         mLinphoneCore.muteMic(isMicMuted);
     }
 
-    /**
-     * 是否外放
-     * @param isSpeakerEnabled
-     */
      public void toggleSpeaker(boolean isSpeakerEnabled) {
          mLinphoneCore.enableSpeaker(isSpeakerEnabled);
      }

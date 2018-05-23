@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `family`;
 CREATE TABLE IF NOT EXISTS `family` (
   `family_id` int(11) NOT NULL,
   `family_adress` int(11) NOT NULL,
-  `family_number` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `family_number` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`family_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -30,10 +30,10 @@ CREATE TABLE IF NOT EXISTS `family` (
 DELETE FROM `family`;
 /*!40000 ALTER TABLE `family` DISABLE KEYS */;
 INSERT INTO `family` (`family_id`, `family_adress`, `family_number`) VALUES
-	(1, 23, 'sooul'),
-	(2, 25, 'kimjung'),
-	(3, 27, 'chunan'),
-	(4, 29, 'pankyu');
+	(1, 23, '가족번호1'),
+	(2, 25, '가족번호2'),
+	(3, 27, '가족번호3'),
+	(4, 29, '가족번호4');
 /*!40000 ALTER TABLE `family` ENABLE KEYS */;
 
 -- 테이블 voice.object 구조 내보내기

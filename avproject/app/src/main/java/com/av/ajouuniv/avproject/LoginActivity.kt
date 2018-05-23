@@ -4,29 +4,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.EditText
 import android.widget.Toast
 
 import com.ajouuniv.linphone.service.Linphone
 import com.ajouuniv.linphone.service.callback.RegistrationCallback
 import com.ajouuniv.linphone.service.keepservice.LinphoneService
-
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
-    @BindView(R.id.sip_account)
-    private var mAccount: EditText? = null
-    @BindView(R.id.sip_password)
-    private var mPassword: EditText? = null
-    @BindView(R.id.sip_server)
-    private var mServer: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        ButterKnife.bind(this)
 
         if (!LinphoneService.isReady()) {
             Linphone.startService(this)
@@ -34,26 +23,29 @@ class LoginActivity : AppCompatActivity() {
                 override fun registrationOk() {
                     super.registrationOk()
                     Log.e(TAG, "registrationOk: ")
-                    Toast.makeText(this@LoginActivity, "로그인성공", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "登录成功！", Toast.LENGTH_SHORT).show()
                     goToMainActivity()
                 }
 
                 override fun registrationFailed() {
                     super.registrationFailed()
                     Log.e(TAG, "registrationFailed: ")
-                    Toast.makeText(this@LoginActivity, "로그인실패！", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "登录失败！", Toast.LENGTH_SHORT).show()
                 }
             }, null)
         } else {
             goToMainActivity()
         }
+
+        press_login.setOnClickListener {
+            login()
+        }
     }
 
-    @OnClick(R.id.press_login)
     fun login() {
-        val account = mAccount!!.text.toString()
-        val password = mPassword!!.text.toString()
-        val serverIP = mServer!!.text.toString()
+        val account = sip_account.text.toString()
+        val password = sip_server.text.toString()
+        val serverIP = press_login.text.toString()
         Linphone.setAccount(account, password, serverIP)
         Linphone.login()
     }
@@ -64,6 +56,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val TAG = "LoginActivity"
+        private val TAG = "LoginActivity"
     }
 }

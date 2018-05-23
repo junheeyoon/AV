@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:text="soulmade00"/>
+        android:text="ajouuniv"/>
 
     <EditText
         android:id="@+id/sip_password"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:hint="비밀번호입력"/>
+        android:text="1111"/>
 
     <EditText
         android:id="@+id/sip_server"

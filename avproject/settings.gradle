@@ -1,1 +1,2 @@
-include ':app', ':sdklinphone'
+include ':app', ':sdklinphone', ':callrecord'
+

@@ -16,7 +16,6 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     @BindView(R.id.hang_up) Button mHangUp;
-    @BindView(R.id.accept_call) Button mCallIn;
     @BindView(R.id.toggle_speaker) Button mToggleSpeaker;
     @BindView(R.id.toggle_mute) Button mToggleMute;
 
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             public void incomingCall(LinphoneCall linphoneCall) {
                 super.incomingCall(linphoneCall);
                 Linphone.toggleSpeaker(true);
-                mCallIn.setVisibility(View.VISIBLE);
+                Linphone.acceptCall();
                 mHangUp.setVisibility(View.VISIBLE);
             }
 
@@ -40,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
                 super.callConnected();
                 Linphone.toggleSpeaker(Linphone.getVideoEnabled());
                 Linphone.toggleMicro(false);
-                mCallIn.setVisibility(View.GONE);
                 mToggleSpeaker.setVisibility(View.VISIBLE);
                 mToggleMute.setVisibility(View.VISIBLE);
             }
@@ -48,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void callEnd() {
                 super.callEnd();
-                mCallIn.setVisibility(View.GONE);
                 mHangUp.setVisibility(View.GONE);
                 mToggleMute.setVisibility(View.GONE);
                 mToggleSpeaker.setVisibility(View.GONE);
@@ -59,11 +56,6 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.hang_up)
     public void hangUp() {
         Linphone.hangUp();
-    }
-
-    @OnClick(R.id.accept_call)
-    public void acceptCall() {
-        Linphone.acceptCall();
     }
 
     @OnClick(R.id.toggle_mute)

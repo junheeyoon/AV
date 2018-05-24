@@ -24,7 +24,6 @@ android {
 
 dependencies {
     compile project(':sdklinphone')
-    compile project(':callrecord')
     compile('com.google.auth:google-auth-library-oauth2-http:0.7.0') {
         exclude module: 'httpclient'
     }

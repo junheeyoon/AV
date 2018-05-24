@@ -1,15 +1,11 @@
 package com.av.ajouuniv.avproject;
 
-import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.ajouuniv.linphone.service.Linphone;
 import com.ajouuniv.linphone.service.callback.PhoneCallback;
-import com.aykuttasil.callrecord.CallRecord;
 
 import org.linphone.core.LinphoneCall;
 
@@ -19,7 +15,6 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    CallRecord callRecord;
     @BindView(R.id.hang_up) Button mHangUp;
     @BindView(R.id.toggle_speaker) Button mToggleSpeaker;
     @BindView(R.id.toggle_mute) Button mToggleMute;
@@ -29,14 +24,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        callRecord = new CallRecord.Builder(this)
-                .setRecordFileName("RecordFileName")
-                .setRecordDirName("Recordtest")
-                .setRecordDirPath(Environment.getExternalStorageDirectory().getPath())
-                .setAudioSource(MediaRecorder.AudioSource.VOICE_COMMUNICATION)
-                .setShowSeed(true)
-                .build();
 
         Linphone.addCallback(null, new PhoneCallback() {
             @Override
@@ -54,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
                 Linphone.toggleMicro(false);
                 mToggleSpeaker.setVisibility(View.VISIBLE);
                 mToggleMute.setVisibility(View.VISIBLE);
-                callRecord.startCallReceiver();
             }
 
             @Override
@@ -63,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
                 mHangUp.setVisibility(View.GONE);
                 mToggleMute.setVisibility(View.GONE);
                 mToggleSpeaker.setVisibility(View.GONE);
-                callRecord.stopCallReceiver();
-                Log.d(TAG,""+callRecord.getStateSaveFile()+callRecord.getRecordDirPath()+callRecord.getRecordDirName()+callRecord.getRecordFileName());
             }
         });
     }

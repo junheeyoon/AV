@@ -39,7 +39,7 @@ server.get('/voice/', function (req, res, next) {
 });
 
 server.get('/test/', function (req, res, next) {
-    res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
+    //res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     connection.query("SELECT * FROM family", function(err, result, fields){
         if(err){
             console.log(err);
@@ -54,7 +54,7 @@ server.get('/test/', function (req, res, next) {
 });
 
 server.post('/test/', function (req, res, next) {
-    res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
+    //res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     var body = req.body;
     res.json({
         result : {

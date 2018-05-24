@@ -59,13 +59,13 @@ class MainActivity : AppCompatActivity() {
             val call = apiService!!.postUser()
             call.enqueue(object : Callback<NetworkExample> {
                 override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
+                    updateServerStatus(response.body().isOk)
                     textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
                 }
                 override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
-                    Log.d(TAG, "what: ")
+                    updateServerStatus(t.toString())
                 }
             })
-
         }
         override fun onReadyForSpeech(params: Bundle) {}
         override fun onEndOfSpeech() {}
@@ -80,6 +80,13 @@ class MainActivity : AppCompatActivity() {
     fun updateStatus(status: String?) {
         this.runOnUiThread {
             val labelView = findViewById<TextView>(R.id.speech_to_text)
+            labelView.text = status
+        }
+    }
+
+    fun updateServerStatus(status: String?) {
+        this.runOnUiThread {
+            val labelView = findViewById<TextView>(R.id.server_text)
             labelView.text = status
         }
     }

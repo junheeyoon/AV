@@ -239,7 +239,7 @@ server.put('/state/', function (req, res, next) {
                         connection.query("UPDATE object SET state = 0 WHERE name = ?", result[i].object_name, function(error, rows){ 
                             if(error){ 
                                 throw error;
-                            }	
+                            }	 
                             else{ 
                                 console.log(rows); 
                             } 
@@ -277,12 +277,7 @@ server.listen(3000, function () {
 });
 
 module.exports = server;
-// server.run = function () {
-//     server.listen(3000, function () {
-//         console.log('Example app listening on port 3000!');
-//     });
-// };
-// module.exports = server;
+
 // server.get('/user/:id', function (req, res) {
 
 //     for (var i = 0; i < db1.userlist.length; i++){

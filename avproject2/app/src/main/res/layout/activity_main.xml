@@ -14,9 +14,18 @@
         <TextView
             android:id="@+id/speech_to_text"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/server_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/speech_to_text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
 
         <Button
             android:id="@+id/speech_to_text_btn"
@@ -27,13 +36,5 @@
             android:layout_marginBottom="83dp"
             android:text="speech_to_text" />
 
-        <Button
-            android:id="@+id/text_to_speech_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="23dp"
-            android:text="text_to_speech" />
     </RelativeLayout>
 </FrameLayout>

@@ -26,8 +26,6 @@ class MainActivity : AppCompatActivity() {
     var apiService: ApiInterface? = null
     var textToSpeech : TextToSpeech? = null
 
-    var speechString : String? = "안녕"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -37,10 +35,6 @@ class MainActivity : AppCompatActivity() {
         apiService = ApiClient.getClient().create(ApiInterface::class.java)
         textToSpeech = TextToSpeech(this,textToSpeechListener)
 
-        val textToSpeechBtn = findViewById<Button>(R.id.text_to_speech_btn)
-        textToSpeechBtn.setOnClickListener {
-            textToSpeech!!.speak(speechString,TextToSpeech.QUEUE_FLUSH, null)
-        }
         val speechToTextBtn = findViewById<Button>(R.id.speech_to_text_btn)
         speechToTextBtn.setOnClickListener {
             val i = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)            //음성인식 intent생성
@@ -60,19 +54,16 @@ class MainActivity : AppCompatActivity() {
             val mResult = results.getStringArrayList(key)
             val rs = arrayOfNulls<String>(mResult.size)
             mResult.toArray(rs)
-            speechString = rs[0]
-            updateStatus(speechString)
-            val call = apiService!!.getUser()
+            updateStatus(rs[0])
+
+            val call = apiService!!.postUser()
             call.enqueue(object : Callback<NetworkExample> {
                 override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
-                    if (response.body().details != null) {
-                        Log.d(this@MainActivity.TAG, "what: " + response.body())
-                    } else {
-                        Log.d(TAG, "what: " + response.body())
-                    }
+                    updateServerStatus(response.body().isOk)
+                    textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
                 }
                 override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
-                    Log.d(TAG, "what: ")
+                    updateServerStatus(t.toString())
                 }
             })
         }
@@ -89,6 +80,13 @@ class MainActivity : AppCompatActivity() {
     fun updateStatus(status: String?) {
         this.runOnUiThread {
             val labelView = findViewById<TextView>(R.id.speech_to_text)
+            labelView.text = status
+        }
+    }
+
+    fun updateServerStatus(status: String?) {
+        this.runOnUiThread {
+            val labelView = findViewById<TextView>(R.id.server_text)
             labelView.text = status
         }
     }

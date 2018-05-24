@@ -56,11 +56,13 @@ server.get('/test/', function (req, res, next) {
 server.post('/test/', function (req, res, next) {
     //res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     var body = req.body;
+    console.log('123123');
     res.json({
                 isOk : true, 
                 message : '사용자가 등록되었습니다.'
         
     });
+    console.log('444');
 });
 
 server.get('/state/:device_id', function (req, res, next) {

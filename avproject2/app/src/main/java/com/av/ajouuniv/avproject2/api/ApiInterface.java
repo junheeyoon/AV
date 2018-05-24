@@ -1,4 +1,4 @@
-package com.av.ajouuniv.avproject2;
+package com.av.ajouuniv.avproject2.api;
 
 import com.av.ajouuniv.avproject2.data.NetworkExample;
 

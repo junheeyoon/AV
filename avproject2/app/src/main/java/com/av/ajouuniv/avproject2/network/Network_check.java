@@ -1,4 +1,4 @@
-package com.av.ajouuniv.avproject2;
+package com.av.ajouuniv.avproject2.network;
 
 import android.app.Activity;
 import android.content.Context;

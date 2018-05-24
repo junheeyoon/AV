@@ -10,17 +10,23 @@ import android.util.Log
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
+import com.av.ajouuniv.avproject2.api.ApiClient
+import com.av.ajouuniv.avproject2.api.ApiInterface
 import com.av.ajouuniv.avproject2.data.NetworkExample
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
+import android.speech.tts.TextToSpeech
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private val TAG = "MainActivity"
     var mRecognizer: SpeechRecognizer? = null
     var apiService: ApiInterface? = null
+    var textToSpeech : TextToSpeech? = null
+
+    var speechString : String? = "안녕"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,20 +35,24 @@ class MainActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         apiService = ApiClient.getClient().create(ApiInterface::class.java)
+        textToSpeech = TextToSpeech(this,textToSpeechListener)
 
-        val button = findViewById<Button>(R.id.speech_to_text_btn)
-        button.setOnClickListener {
+        val textToSpeechBtn = findViewById<Button>(R.id.text_to_speech_btn)
+        textToSpeechBtn.setOnClickListener {
+            textToSpeech!!.speak(speechString,TextToSpeech.QUEUE_FLUSH, null)
+        }
+        val speechToTextBtn = findViewById<Button>(R.id.speech_to_text_btn)
+        speechToTextBtn.setOnClickListener {
             val i = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)            //음성인식 intent생성
             i.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)    //데이터 설정
             i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
             i.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)//음성인식 언어 설정
             mRecognizer = SpeechRecognizer.createSpeechRecognizer(this)                //음성인식 객체
-            mRecognizer?.setRecognitionListener(listener)                                        //음성인식 리스너 등록
+            mRecognizer?.setRecognitionListener(speechToTextListener)                                        //음성인식 리스너 등록
             mRecognizer?.startListening(i)
         }
     }
-
-    private val listener = object : RecognitionListener {
+    private val speechToTextListener = object : RecognitionListener {
         override fun onRmsChanged(rmsdB: Float) {}
         override fun onResults(results: Bundle) {
             var key = ""
@@ -50,8 +60,8 @@ class MainActivity : AppCompatActivity() {
             val mResult = results.getStringArrayList(key)
             val rs = arrayOfNulls<String>(mResult.size)
             mResult.toArray(rs)
-            updateStatus(rs[0])
-
+            speechString = rs[0]
+            updateStatus(speechString)
             val call = apiService!!.getUser()
             call.enqueue(object : Callback<NetworkExample> {
                 override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
@@ -74,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         override fun onEvent(eventType: Int, params: Bundle) {}
         override fun onBufferReceived(buffer: ByteArray) {}
     }
+    private val textToSpeechListener = TextToSpeech.OnInitListener { textToSpeech!!.language = Locale.KOREAN }
 
     fun updateStatus(status: String?) {
         this.runOnUiThread {

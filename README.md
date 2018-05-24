@@ -1,4 +1,4 @@
-# AV
+﻿# AV
 Ajou software 캡스톤디자인
 
 프로젝트 시작
@@ -23,3 +23,14 @@ Ajou software 캡스톤디자인
 클라우드 스피치 API를 활용해서 음성을 텍스트로 변환.
 머신러닝을 활용해 변환된 텍스트를 하드웨어에 보낸다. 블루투스
 그 하드웨어가 작동하면 다시신호를 보낸다.
+
+문제점 : 
+
+voip통신시, 녹음 및 speech to text 작업 이루어 지지 않음 -> 기기 두개를 연결해서 해결.
+
+기술 : 
+RX JAVA : https://github.com/ReactiveX/RxAndroid
+speech to text : https://developer.android.com/reference/android/speech/package-summary
+
+
+

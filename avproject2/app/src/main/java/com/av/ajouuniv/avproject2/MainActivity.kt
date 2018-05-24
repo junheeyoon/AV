@@ -17,7 +17,6 @@ import android.content.Context
 import android.content.ServiceConnection
 
 
-
 class MainActivity : AppCompatActivity() {
 
     var mRecognizer: SpeechRecognizer? = null
@@ -26,13 +25,13 @@ class MainActivity : AppCompatActivity() {
 
     private var mConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceDisconnected(name: ComponentName) {
-            Toast.makeText(this@MainActivity, "Service is disconnected", 10).show()
+            Toast.makeText(this@MainActivity, "Service is disconnected", 1000).show()
             mBounded = false
             mServer = null
         }
 
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
-            Toast.makeText(this@MainActivity, "Service is connected", 10).show()
+            Toast.makeText(this@MainActivity, "Service is connected", 1000).show()
             mBounded = true
             val mLocalBinder = service as LocalBinder
             mServer = mLocalBinder.serverInstance
@@ -60,10 +59,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-
         val mIntent = Intent(this, Server::class.java)
         bindService(mIntent, mConnection, Context.BIND_AUTO_CREATE)
     }
+
+    override fun onStop() {
+        super.onStop()
+        if (mBounded) {
+            unbindService(mConnection)
+            mBounded = false
+        }
+    };
 
     private val listener = object : RecognitionListener {
         override fun onRmsChanged(rmsdB: Float) {}

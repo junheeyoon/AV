@@ -19,6 +19,14 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
+            android:id="@+id/server_call_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/speech_to_text_btn"
+            android:text="server_call" />
+
+        <Button
             android:id="@+id/speech_to_text_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

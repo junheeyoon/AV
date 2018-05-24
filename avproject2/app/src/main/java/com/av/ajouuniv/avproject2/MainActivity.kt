@@ -37,6 +37,20 @@ class MainActivity : AppCompatActivity() {
         apiService = ApiClient.getClient().create(ApiInterface::class.java)
         textToSpeech = TextToSpeech(this,textToSpeechListener)
 
+
+        val serverCallBtn = findViewById<Button>(R.id.server_call_btn)
+        serverCallBtn.setOnClickListener {
+            val call = apiService!!.postUser()
+            call.enqueue(object : Callback<NetworkExample> {
+                override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
+                    textToSpeech!!.speak(speechString,TextToSpeech.QUEUE_FLUSH, null)
+                }
+                override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
+                    Log.d(TAG, "what: ")
+                }
+            })
+        }
+
         val textToSpeechBtn = findViewById<Button>(R.id.text_to_speech_btn)
         textToSpeechBtn.setOnClickListener {
             textToSpeech!!.speak(speechString,TextToSpeech.QUEUE_FLUSH, null)
@@ -62,19 +76,6 @@ class MainActivity : AppCompatActivity() {
             mResult.toArray(rs)
             speechString = rs[0]
             updateStatus(speechString)
-            val call = apiService!!.getUser()
-            call.enqueue(object : Callback<NetworkExample> {
-                override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
-                    if (response.body().details != null) {
-                        Log.d(this@MainActivity.TAG, "what: " + response.body())
-                    } else {
-                        Log.d(TAG, "what: " + response.body())
-                    }
-                }
-                override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
-                    Log.d(TAG, "what: ")
-                }
-            })
         }
         override fun onReadyForSpeech(params: Bundle) {}
         override fun onEndOfSpeech() {}

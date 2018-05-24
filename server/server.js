@@ -291,8 +291,6 @@ module.exports = server;
 //     });
 // });
 
-// var ids = 0;
-
 // server.post('/user/', function (req, res) {
 //     var body = req.body;
 //     var id = 0; 

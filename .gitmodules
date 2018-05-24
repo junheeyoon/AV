@@ -108,9 +108,3 @@
 [submodule "submodules/bcmatroska2"]
 	path = submodules/bcmatroska2
 	url = git://git.linphone.org/bcmatroska2.git
-[submodule "linphone-android"]
-	path = linphone-android
-	url = git://git.linphone.org/linphone-android.git
-[submodule "phone1"]
-	path = phone1
-	url = https://github.com/junheeyoon/linphone-android

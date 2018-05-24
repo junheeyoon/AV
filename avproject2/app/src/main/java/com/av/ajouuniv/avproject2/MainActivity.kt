@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         apiService = ApiClient.getClient().create(ApiInterface::class.java)
         textToSpeech = TextToSpeech(this,textToSpeechListener)
 
+        // 블루투스로 바꿀예정..
+        
         val speechToTextBtn = findViewById<Button>(R.id.speech_to_text_btn)
         speechToTextBtn.setOnClickListener {
             val i = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)            //음성인식 intent생성
@@ -83,7 +85,6 @@ class MainActivity : AppCompatActivity() {
             labelView.text = status
         }
     }
-
     fun updateServerStatus(status: String?) {
         this.runOnUiThread {
             val labelView = findViewById<TextView>(R.id.server_text)

@@ -177,7 +177,7 @@ server.delete('/user/:user_id', function (req, res, next) {
 }); 
 
 server.delete('/device/:device_id', function (req, res, next) {
-    res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
+    //res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     connection.query("DELETE * FROM object WHERE device_id = ?", req.params.device_id, function(err, result, fields){
         if(err){
             console.log(err);

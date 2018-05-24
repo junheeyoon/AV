@@ -150,7 +150,7 @@ server.post('/device/', function (req, res, next) {
 });
 
 server.delete('/user/:user_id', function (req, res, next) {
-    res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
+    //res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     connection.query("DELETE * FROM user WHERE user_id = ?", req.params.user_id, function(err, result, fields){
         if(err){
             console.log(err);

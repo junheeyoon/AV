@@ -6,19 +6,29 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.util.Log
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
+import com.av.ajouuniv.avproject2.data.NetworkExample
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 class MainActivity : AppCompatActivity() {
 
+    private val TAG = "MainActivity"
     var mRecognizer: SpeechRecognizer? = null
+    var apiService: ApiInterface? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
+        apiService = ApiClient.getClient().create(ApiInterface::class.java)
 
         val button = findViewById<Button>(R.id.speech_to_text_btn)
         button.setOnClickListener {
@@ -41,6 +51,20 @@ class MainActivity : AppCompatActivity() {
             val rs = arrayOfNulls<String>(mResult.size)
             mResult.toArray(rs)
             updateStatus(rs[0])
+
+            val call = apiService!!.getUser()
+            call.enqueue(object : Callback<NetworkExample> {
+                override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
+                    if (response.body().details != null) {
+                        Log.d(this@MainActivity.TAG, "what: " + response.body())
+                    } else {
+                        Log.d(TAG, "what: " + response.body())
+                    }
+                }
+                override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
+                    Log.d(TAG, "what: ")
+                }
+            })
         }
         override fun onReadyForSpeech(params: Bundle) {}
         override fun onEndOfSpeech() {}

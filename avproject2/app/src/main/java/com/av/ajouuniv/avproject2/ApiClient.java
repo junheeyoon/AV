@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient
 {
-    public static final String BASE_URL = "http://testapi.droidmentor.com/";
+    public static final String BASE_URL = "http://54.183.138.146:3000/";
 
     private static Retrofit retrofit = null;
 

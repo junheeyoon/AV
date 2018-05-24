@@ -8,10 +8,6 @@ import android.widget.Toast;
 
 public class Network_check {
 
-//			********************************************************************************************
-//	 										IF NETWORK IS ACTIVE OR NOT
-//			********************************************************************************************
-
     public static boolean isNetworkAvailable(Context context)
     {
         boolean networkavailable=false;

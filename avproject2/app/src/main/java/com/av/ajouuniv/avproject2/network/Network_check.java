@@ -1,4 +1,4 @@
-package com.av.ajouuniv.avproject2;
+package com.av.ajouuniv.avproject2.network;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,10 +7,6 @@ import android.net.NetworkInfo;
 import android.widget.Toast;
 
 public class Network_check {
-
-//			********************************************************************************************
-//	 										IF NETWORK IS ACTIVE OR NOT
-//			********************************************************************************************
 
     public static boolean isNetworkAvailable(Context context)
     {

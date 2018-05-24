@@ -27,5 +27,13 @@
             android:layout_marginBottom="83dp"
             android:text="speech_to_text" />
 
+        <Button
+            android:id="@+id/text_to_speech_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="23dp"
+            android:text="text_to_speech" />
     </RelativeLayout>
 </FrameLayout>

@@ -6,12 +6,20 @@ import android.view.View;
 import android.widget.Button;
 import com.ajouuniv.linphone.service.Linphone;
 import com.ajouuniv.linphone.service.callback.PhoneCallback;
+import com.av.ajouuniv.avproject.model.ApiUser;
+import com.av.ajouuniv.avproject.model.User;
+import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import org.linphone.core.LinphoneCall;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -41,6 +49,38 @@ public class MainActivity extends AppCompatActivity {
                 Linphone.toggleMicro(false);
                 mToggleSpeaker.setVisibility(View.VISIBLE);
                 mToggleMute.setVisibility(View.VISIBLE);
+                Rx2AndroidNetworking.get("https://ajouuniv.av/getAnUser/{userId}")
+                        .addPathParameter("userId", "1")
+                        .build()
+                        .getObjectObservable(ApiUser.class)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .map(new Function<ApiUser, User>() {
+                            @Override
+                            public User apply(ApiUser apiUser) throws Exception {
+                                // here we get ApiUser from server
+                                User user = new User(apiUser);
+                                // then by converting, we are returning user
+                                return user;
+                            }
+                        })
+                        .subscribe(new Observer<User>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                            }
+
+                            @Override
+                            public void onNext(User user) {
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                            }
+
+                            @Override
+                            public void onComplete() {
+                            }
+                        });
             }
 
             @Override

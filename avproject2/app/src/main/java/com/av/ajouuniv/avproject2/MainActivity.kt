@@ -6,16 +6,45 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
+import com.av.ajouuniv.avproject2.Server.LocalBinder
+import android.widget.Toast
+import android.os.IBinder
+import android.content.ComponentName
+import android.content.Context
+import android.content.ServiceConnection
+
+
 
 class MainActivity : AppCompatActivity() {
 
     var mRecognizer: SpeechRecognizer? = null
+    var mBounded: Boolean = false
+    var mServer: Server? = null
+
+    private var mConnection: ServiceConnection = object : ServiceConnection {
+        override fun onServiceDisconnected(name: ComponentName) {
+            Toast.makeText(this@MainActivity, "Service is disconnected", 10).show()
+            mBounded = false
+            mServer = null
+        }
+
+        override fun onServiceConnected(name: ComponentName, service: IBinder) {
+            Toast.makeText(this@MainActivity, "Service is connected", 10).show()
+            mBounded = true
+            val mLocalBinder = service as LocalBinder
+            mServer = mLocalBinder.serverInstance
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         val button = findViewById<Button>(R.id.speech_to_text_btn)
         button.setOnClickListener {
@@ -27,6 +56,13 @@ class MainActivity : AppCompatActivity() {
             mRecognizer?.setRecognitionListener(listener)                                        //음성인식 리스너 등록
             mRecognizer?.startListening(i)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val mIntent = Intent(this, Server::class.java)
+        bindService(mIntent, mConnection, Context.BIND_AUTO_CREATE)
     }
 
     private val listener = object : RecognitionListener {

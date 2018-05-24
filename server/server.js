@@ -38,6 +38,32 @@ server.get('/voice/', function (req, res, next) {
     });
 });
 
+server.get('/test/', function (req, res, next) {
+    res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
+    connection.query("SELECT * FROM family", function(err, result, fields){
+        if(err){
+            console.log(err);
+            console.log("쿼리문에 오류가 있습니다.");
+        }
+        else{
+            console.log('Access');
+            console.log(result);
+            res.json(result);
+        }
+    });    
+});
+
+server.post('/test/', function (req, res, next) {
+    res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
+    var body = req.body;
+    res.json({
+        result : {
+                isOk : true, 
+                message : '사용자가 등록되었습니다.'
+        }
+    });
+});
+
 server.get('/state/:device_id', function (req, res, next) {
     res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     connection.query("SELECT * FROM object WHERE device_id = ?", req.params.device_id, function(err, result, fields){

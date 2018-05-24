@@ -123,7 +123,7 @@ server.post('/user/', function (req, res, next) {
 }); 
 
 server.post('/device/', function (req, res, next) {
-    res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
+    //res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     var body = req.body;
     connection.query("INSERT INTO user SET ?", body, function(err, result, fields){
         if(err){

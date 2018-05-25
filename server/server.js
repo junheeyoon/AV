@@ -56,11 +56,20 @@ server.post('/test/', function (req, res, next) {
     var body = req.body;
     console.log(body)
     console.log('123123');
-    res.json({
+    if(parseInt(body.message.indexOf('관리자')) !== -1){
+        res.json({
                 isOk : true, 
                 message : body.message + '사용자가 등록되었습니다.'
         
-    });
+        });
+    }
+    else{
+        res.json({
+            isOk : false, 
+            message : body.message + '사용자가 등록이 실패했습니다.'
+
+        });
+    }
     console.log('444');
 });
 

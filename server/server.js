@@ -294,13 +294,13 @@ server.put('/state/', function (req, res, next) {
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");
         }
-        else{
+        else {
             console.log('Access');
             console.log(result);
-            for(i = 0; i < result.length; i++){
-                console.log(1);
-                name = body.message.indexOf(result[i].object_name);
-                if(parseInt(body.message.indexOf('관리자')) !== -1){
+            if(parseInt(body.message.indexOf('관리자')) !== -1){
+                for(i = 0; i < result.length; i++){
+                    console.log(1);
+                    name = body.message.indexOf(result[i].object_name);
                     if(parseInt(name) !== -1){
                         console.log(2);
                         if(parseInt(body.message.indexOf('켜')) !== -1){
@@ -347,15 +347,15 @@ server.put('/state/', function (req, res, next) {
                         }
                     }                    
                 }
+            } else {
+                res.json({
+            
+                    isOk : false, 
+                    message : '관리자가 아닙니다.'
+            
+                });
             }
-                
         }
-        res.json({
-                
-            isOk : false, 
-            message : '관리자가 아닙니다.'
-    
-        });
     });
 }); 
 

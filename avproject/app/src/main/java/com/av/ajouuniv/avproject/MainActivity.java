@@ -52,11 +52,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void callConnected() {
                 super.callConnected();
+                bt.send("Text", true);
                 Linphone.toggleSpeaker(Linphone.getVideoEnabled());
                 Linphone.toggleMicro(false);
                 mToggleSpeaker.setVisibility(View.VISIBLE);
                 mToggleMute.setVisibility(View.VISIBLE);
-
             }
 
             @Override

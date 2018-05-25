@@ -18,6 +18,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import android.speech.tts.TextToSpeech
 import java.util.*
+import app.akexorcist.bluetotohspp.library.BluetoothSPP
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     var mRecognizer: SpeechRecognizer? = null
     var apiService: ApiInterface? = null
     var textToSpeech : TextToSpeech? = null
+    private val bt: BluetoothSPP? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

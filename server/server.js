@@ -346,12 +346,6 @@ server.put('/state/', function (req, res, next) {
                     }
                 }
             }
-            res.json({
-                result : {
-                        isOk : false, 
-                        error : 'object가 존재하지 않습니다.'
-                }
-            });
         }
     });
 }); 

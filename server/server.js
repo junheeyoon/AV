@@ -169,8 +169,8 @@ server.delete('/user/:user_id', function (req, res, next) {
     });
 }); 
 
-server.delete('/device/:device_id', function (req, res, next) {
-    connection.query("DELETE * FROM object WHERE device_id = ?", req.params.device_id, function(err, result, fields){
+server.delete('/device/:object_name', function (req, res, next) {
+    connection.query("DELETE * FROM object WHERE object_name = ?", req.params.object_name, function(err, result, fields){
         if(err){
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");

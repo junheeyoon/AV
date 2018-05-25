@@ -313,11 +313,10 @@ server.put('/state/', function (req, res, next) {
                         //     } 
                         // });
                         res.json({
-                            result : {
                                     isOk : true,
                                     message :  result[i].object_name
                                     //state : result[i].object_state
-                            }
+                            
                         });
                     }
                     else if(parseInt(body.name.indexOf('꺼')) !== -1){

@@ -312,7 +312,7 @@ server.put('/state/', function (req, res, next) {
                         res.json({
                             result : {
                                     isOk : true,
-                                    device :  result[i].object_name, 
+                                    message :  result[i].object_name, 
                                     state : result[i].object_state
                             }
                         });
@@ -329,7 +329,7 @@ server.put('/state/', function (req, res, next) {
                         res.json({
                             result : {
                                     isOk : true,
-                                    device :  result[i].object_name,
+                                    message :  result[i].object_name,
                                     state : result[i].object_state
                             }
                         });

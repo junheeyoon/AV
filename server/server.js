@@ -341,7 +341,7 @@ server.put('/state/', function (req, res, next) {
                             res.json({
                                 result : {
                                         isOk : false, 
-                                        error : '명령을 확인해주세요.'
+                                        message : '다시 명령을 해주세요.'
                                 }
                             });
                         }

@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         bt = BluetoothSPP(this)
         bt!!.setOnDataReceivedListener({ _, message ->
-            //데이터 수신
+            //블루투스 데이터 수신
             Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
         })
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -74,6 +74,8 @@ class MainActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
                     updateServerStatus(response.body().isOk)
                     textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
+                    //블루투스 데이터 송신
+                    bt!!.send("Text", true)
                 }
                 override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
                     updateServerStatus(t.toString())

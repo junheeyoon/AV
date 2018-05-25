@@ -19,6 +19,9 @@ import retrofit2.Response
 import android.speech.tts.TextToSpeech
 import java.util.*
 import app.akexorcist.bluetotohspp.library.BluetoothSPP
+import android.widget.Toast
+
+
 
 
 
@@ -33,8 +36,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        bt = BluetoothSPP(this) //Initializing
-
+        bt = BluetoothSPP(this)
+        bt!!.setOnDataReceivedListener({ _, message ->
+            //데이터 수신
+            Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
+        })
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         apiService = ApiClient.getClient().create(ApiInterface::class.java)

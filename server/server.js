@@ -301,19 +301,19 @@ server.put('/state/', function (req, res, next) {
                 name = body.message.indexOf(result[i].object_name);
                 if(parseInt(name) !== -1){
                     if(parseInt(body.message.indexOf('켜')) !== -1){
-                        connection.query("UPDATE object SET object_state = 1 WHERE object_name = ?", result[i].object_name, function(error, rows){ 
-                            if(error){ 
-                                throw error;
-                            }	
-                            else{ 
-                                console.log(rows); 
-                            } 
-                        });
+                        // connection.query("UPDATE object SET object_state = 1 WHERE object_name = ?", result[i].object_name, function(error, rows){ 
+                        //     if(error){ 
+                        //         throw error;
+                        //     }	
+                        //     else{ 
+                        //         console.log(rows); 
+                        //     } 
+                        // });
                         res.json({
                             result : {
                                     isOk : true,
                                     message :  result[i].object_name, 
-                                    state : result[i].object_state
+                                    //state : result[i].object_state
                             }
                         });
                     }

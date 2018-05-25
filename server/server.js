@@ -170,25 +170,68 @@ server.delete('/user/:user_id', function (req, res, next) {
 }); 
 
 server.delete('/device/:object_name', function (req, res, next) {
-    connection.query("DELETE * FROM object WHERE object_name = ?", req.params.object_name, function(err, result, fields){
+    var i = 0;
+    var name;
+    var body = req.body;
+    connection.query("SELECT * FROM object", function(err, result, fields){
         if(err){
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");
-            res.json({
-                isOk : false, 
-                error : "쿼리문에 오류가 있습니다."
-            });
         }
         else{
             console.log('Access');
             console.log(result);
+            for(i = 0; i < result.length; i++){
+                name = body.name.indexOf(result[i].object_name);
+                if(parseInt(name) !== -1){
+                    if(parseInt(body.name.indexOf('삭제')) !== -1){
+                        connection.query("DELETE * FROM object WHERE object_name = ?", name, function(error, rows){ 
+                            if(error){ 
+                                throw error;
+                            }	
+                            else{ 
+                                console.log(rows); 
+                            } 
+                        });
+                        res.json({
+                            isOk : true,
+                            message : result[i].object_name + '가 삭제되었습니다.'
+                        });
+                    }                  
+                    else {
+                        res.json({
+                            isOk : false, 
+                            error : '명령을 확인해주세요.'
+                        });
+                    }
+                }
+            }
             res.json({
-                isOk : true, 
-                message : req.params.object_name + '가 삭제되었습니다.'
+                isOk : false, 
+                error : 'object가 존재하지 않습니다.'
             });
         }
     });
-}); 
+});    
+//     connection.query("DELETE * FROM object WHERE object_name = ?", req.params.object_name, function(err, result, fields){
+//         if(err){
+//             console.log(err);
+//             console.log("쿼리문에 오류가 있습니다.");
+//             res.json({
+//                 isOk : false, 
+//                 error : "쿼리문에 오류가 있습니다."
+//             });
+//         }
+//         else{
+//             console.log('Access');
+//             console.log(result);
+//             res.json({
+//                 isOk : true, 
+//                 message : req.params.object_name + '가 삭제되었습니다.'
+//             });
+//         }
+//     });
+// }); 
 
 server.put('/state/', function (req, res, next) {
     var i = 0;

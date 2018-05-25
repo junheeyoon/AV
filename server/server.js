@@ -143,30 +143,72 @@ server.post('/device/', function (req, res, next) {
     });
 });
 
-server.delete('/user/:user_id', function (req, res, next) {
-    connection.query("DELETE * FROM user WHERE user_id = ?", req.params.user_id, function(err, result, fields){
+server.delete('/user/:user_name', function (req, res, next) {
+    var i = 0;
+    var user_name;
+    var body = req.body;
+    connection.query("SELECT * FROM user", function(err, result, fields){
         if(err){
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");
-            res.json({
-                result : {
-                        isOk : false, 
-                        error : "쿼리문에 오류가 있습니다."
-                }
-            });
         }
         else{
             console.log('Access');
             console.log(result);
-            res.json({
-                result : {
-                        isOk : true, 
-                        message : req.params.user_id + '가 삭제되었습니다.'
+            for(i = 0; i < result.length; i++){
+                user_name = body.name.indexOf(result[i].user_name);
+                if(parseInt(name) !== -1){
+                    if(parseInt(body.name.indexOf('삭제')) !== -1){
+                        connection.query("DELETE * FROM user WHERE user_name = ?", user_name, function(error, rows){ 
+                            if(error){ 
+                                throw error;
+                            }	
+                            else{ 
+                                console.log(rows); 
+                            } 
+                        });
+                        res.json({
+                            isOk : true,
+                            message : result[i].user_name + '가 삭제되었습니다.'
+                        });
+                    }                  
+                    else {
+                        res.json({
+                            isOk : false, 
+                            error : '명령을 확인해주세요.'
+                        });
+                    }
                 }
+            }
+            res.json({
+                isOk : false, 
+                error : 'user가 존재하지 않습니다.'
             });
         }
-        
     });
+    // connection.query("DELETE * FROM user WHERE user_id = ?", req.params.user_id, function(err, result, fields){
+    //     if(err){
+    //         console.log(err);
+    //         console.log("쿼리문에 오류가 있습니다.");
+    //         res.json({
+    //             result : {
+    //                     isOk : false, 
+    //                     error : "쿼리문에 오류가 있습니다."
+    //             }
+    //         });
+    //     }
+    //     else{
+    //         console.log('Access');
+    //         console.log(result);
+    //         res.json({
+    //             result : {
+    //                     isOk : true, 
+    //                     message : req.params.user_id + '가 삭제되었습니다.'
+    //             }
+    //         });
+    //     }
+        
+    // });
 }); 
 
 server.delete('/device/:object_name', function (req, res, next) {

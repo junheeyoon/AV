@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
             mResult.toArray(rs)
             updateStatus(rs[0])
 
-            val call = apiService!!.postUser()
+            val call = apiService!!.updateDevice(rs[0])
             call.enqueue(object : Callback<NetworkExample> {
                 override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
                     updateServerStatus(response.body().isOk)

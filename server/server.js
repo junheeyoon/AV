@@ -348,13 +348,14 @@ server.put('/state/', function (req, res, next) {
                     }                    
                 }
             }
-            res.json({
                 
-                        isOk : false, 
-                        message : '관리자가 아닙니다.'
-                
-            });    
         }
+        res.json({
+                
+            isOk : false, 
+            message : '관리자가 아닙니다.'
+    
+        });
     });
 }); 
 

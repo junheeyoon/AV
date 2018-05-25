@@ -1,5 +1,7 @@
 package com.av.ajouuniv.avproject2
 
+import android.app.Activity
+import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -21,11 +23,7 @@ import java.util.*
 import app.akexorcist.bluetotohspp.library.BluetoothSPP
 import android.widget.Toast
 import app.akexorcist.bluetotohspp.library.BluetoothState
-
-
-
-
-
+import app.akexorcist.bluetotohspp.library.DeviceList
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,12 +38,35 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bt = BluetoothSPP(this)
-        bt!!.setupService()
-        bt!!.startService(BluetoothState.DEVICE_ANDROID) //DEVICE_OTHER 다른 기기 끼리
-        bt!!.setOnDataReceivedListener({ _, message ->
-            //블루투스 데이터 수신
-            Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
+        if (!bt!!.isBluetoothAvailable()) { //블루투스 사용 불가
+            Toast.makeText(applicationContext, "Bluetooth is not available", Toast.LENGTH_SHORT).show()
+        }
+
+        bt!!.setOnDataReceivedListener(BluetoothSPP.OnDataReceivedListener { data, message ->
+            //데이터 수신
+            val i = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)            //음성인식 intent생성
+            i.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)    //데이터 설정
+            i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
+            i.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)//음성인식 언어 설정
+            mRecognizer = SpeechRecognizer.createSpeechRecognizer(this)                //음성인식 객체
+            mRecognizer?.setRecognitionListener(speechToTextListener)                                        //음성인식 리스너 등록
+            mRecognizer?.startListening(i)
         })
+
+        bt!!.setBluetoothConnectionListener(object : BluetoothSPP.BluetoothConnectionListener { //연결됐을 때
+            override fun onDeviceConnected(name: String, address: String) {
+                Toast.makeText(applicationContext, "Connected to $name\n$address", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onDeviceDisconnected() { //연결해제
+                Toast.makeText(applicationContext, "Connection lost", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onDeviceConnectionFailed() { //연결실패
+                Toast.makeText(applicationContext, "Unable to connect", Toast.LENGTH_SHORT).show()
+            }
+        })
+
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         apiService = ApiClient.getClient().create(ApiInterface::class.java)
@@ -64,6 +85,35 @@ class MainActivity : AppCompatActivity() {
             mRecognizer?.startListening(i)
         }
     }
+
+
+    override fun onStart() {
+        super.onStart()
+        if (!bt!!.isBluetoothEnabled()) { //
+            val intent : Intent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            startActivityForResult(intent, BluetoothState.REQUEST_ENABLE_BT)
+        } else {
+            if (!bt!!.isServiceAvailable()) {
+                bt!!.setupService();
+                bt!!.startService(BluetoothState.DEVICE_ANDROID)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
+            if (resultCode == Activity.RESULT_OK)
+                bt!!.connect(data);
+        } else if (requestCode == BluetoothState.REQUEST_ENABLE_BT) {
+            if (resultCode == Activity.RESULT_OK) {
+                bt!!.setupService();
+                bt!!.startService(BluetoothState.DEVICE_OTHER);
+            } else {
+                Toast.makeText(getApplicationContext(), "Bluetooth was not enabled.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     private val speechToTextListener = object : RecognitionListener {
         override fun onRmsChanged(rmsdB: Float) {}
         override fun onResults(results: Bundle) {

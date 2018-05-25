@@ -20,6 +20,9 @@ import android.speech.tts.TextToSpeech
 import java.util.*
 import app.akexorcist.bluetotohspp.library.BluetoothSPP
 import android.widget.Toast
+import app.akexorcist.bluetotohspp.library.BluetoothState
+
+
 
 
 
@@ -37,6 +40,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bt = BluetoothSPP(this)
+        bt!!.setupService()
+        bt!!.startService(BluetoothState.DEVICE_ANDROID) //DEVICE_OTHER 다른 기기 끼리
         bt!!.setOnDataReceivedListener({ _, message ->
             //블루투스 데이터 수신
             Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()

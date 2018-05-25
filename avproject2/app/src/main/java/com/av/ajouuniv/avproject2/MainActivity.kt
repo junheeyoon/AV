@@ -28,11 +28,12 @@ class MainActivity : AppCompatActivity() {
     var mRecognizer: SpeechRecognizer? = null
     var apiService: ApiInterface? = null
     var textToSpeech : TextToSpeech? = null
-    private val bt: BluetoothSPP? = null
+    private var bt: BluetoothSPP? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        bt = BluetoothSPP(this) //Initializing
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 

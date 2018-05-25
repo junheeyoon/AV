@@ -298,9 +298,9 @@ server.put('/state/', function (req, res, next) {
             console.log('Access');
             console.log(result);
             for(i = 0; i < result.length; i++){
-                name = body.name.indexOf(result[i].object_name);
+                name = body.message.indexOf(result[i].object_name);
                 if(parseInt(name) !== -1){
-                    if(parseInt(body.name.indexOf('켜')) !== -1){
+                    if(parseInt(body.message.indexOf('켜')) !== -1){
                         connection.query("UPDATE object SET object_state = 1 WHERE object_name = ?", result[i].object_name, function(error, rows){ 
                             if(error){ 
                                 throw error;

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
 import com.ajouuniv.linphone.service.Linphone;
 import com.ajouuniv.linphone.service.callback.PhoneCallback;
 import com.av.ajouuniv.avproject.model.ApiUser;
@@ -12,6 +14,8 @@ import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import org.linphone.core.LinphoneCall;
 
+import app.akexorcist.bluetotohspp.library.BluetoothSPP;
+import app.akexorcist.bluetotohspp.library.BluetoothState;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -23,6 +27,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+
+    private BluetoothSPP bt;
+
     @BindView(R.id.hang_up) Button mHangUp;
     @BindView(R.id.toggle_speaker) Button mToggleSpeaker;
     @BindView(R.id.toggle_mute) Button mToggleMute;
@@ -32,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        bt = new BluetoothSPP(this);
+        bt.setupService();
+        bt.startService(BluetoothState.DEVICE_ANDROID);
+        bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() { //데이터 수신
+            public void onDataReceived(byte[] data, String message) {
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         Linphone.addCallback(null, new PhoneCallback() {
             @Override

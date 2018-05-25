@@ -175,20 +175,16 @@ server.delete('/device/:object_name', function (req, res, next) {
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");
             res.json({
-                result : {
-                        isOk : false, 
-                        error : "쿼리문에 오류가 있습니다."
-                }
+                isOk : false, 
+                error : "쿼리문에 오류가 있습니다."
             });
         }
         else{
             console.log('Access');
             console.log(result);
             res.json({
-                result : {
-                        isOk : true, 
-                        message : req.params.device_id + '가 삭제되었습니다.'
-                }
+                isOk : true, 
+                message : req.params.object_name + '가 삭제되었습니다.'
             });
         }
     });

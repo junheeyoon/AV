@@ -39,7 +39,6 @@ server.get('/voice/', function (req, res, next) {
 });
 
 server.get('/test/', function (req, res, next) {
-    //res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     connection.query("SELECT * FROM family", function(err, result, fields){
         if(err){
             console.log(err);
@@ -54,7 +53,6 @@ server.get('/test/', function (req, res, next) {
 });
 
 server.post('/test/', function (req, res, next) {
-    //res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     var body = req.body;
     console.log('123123');
     res.json({
@@ -66,7 +64,6 @@ server.post('/test/', function (req, res, next) {
 });
 
 server.get('/state/:device_id', function (req, res, next) {
-    //res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     connection.query("SELECT * FROM object WHERE device_id = ?", req.params.device_id, function(err, result, fields){
         if(err){
             console.log(err);
@@ -81,7 +78,6 @@ server.get('/state/:device_id', function (req, res, next) {
 });
 
 server.get('/password/:user_id', function (req, res, next) {
-    //res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     connection.query("SELECT * FROM user WHERE user_id = ?", req.params.user_id, function(err, result, fields){
         if(err){
             console.log(err);
@@ -96,7 +92,6 @@ server.get('/password/:user_id', function (req, res, next) {
 });
 
 server.post('/user/', function (req, res, next) {
-    //res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     var body = req.body;
     connection.query("INSERT INTO user SET ?", body, function(err, result, fields){
         if(err){
@@ -123,7 +118,6 @@ server.post('/user/', function (req, res, next) {
 }); 
 
 server.post('/device/', function (req, res, next) {
-    //res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     var body = req.body;
     connection.query("INSERT INTO user SET ?", body, function(err, result, fields){
         if(err){
@@ -150,7 +144,6 @@ server.post('/device/', function (req, res, next) {
 });
 
 server.delete('/user/:user_id', function (req, res, next) {
-    //res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     connection.query("DELETE * FROM user WHERE user_id = ?", req.params.user_id, function(err, result, fields){
         if(err){
             console.log(err);
@@ -177,7 +170,6 @@ server.delete('/user/:user_id', function (req, res, next) {
 }); 
 
 server.delete('/device/:device_id', function (req, res, next) {
-    //res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     connection.query("DELETE * FROM object WHERE device_id = ?", req.params.device_id, function(err, result, fields){
         if(err){
             console.log(err);
@@ -206,7 +198,6 @@ server.put('/state/', function (req, res, next) {
     var i = 0;
     var name;
     var body = req.body;
-    //res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
     connection.query("SELECT * FROM object", function(err, result, fields){
         if(err){
             console.log(err);

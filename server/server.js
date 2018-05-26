@@ -321,14 +321,14 @@ server.put('/state/', function (req, res, next) {
                             });
                         }
                         else if(parseInt(body.message.indexOf('꺼')) !== -1){
-                            // connection.query("UPDATE object SET state = 0 WHERE name = ?", result[i].object_name, function(error, rows){ 
-                            //     if(error){ 
-                            //         throw error;
-                            //     }	 
-                            //     else{ 
-                            //         console.log(rows); 
-                            //     } 
-                            // });
+                            connection.query("UPDATE object SET state = 0 WHERE name = ?", result[i].object_name, function(error, rows){ 
+                                if(error){ 
+                                    throw error;
+                                }	 
+                                else{ 
+                                    console.log(rows); 
+                                } 
+                            });
                             res.json({
                                 result : {
                                         isOk : true,

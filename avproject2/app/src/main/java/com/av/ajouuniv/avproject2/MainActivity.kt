@@ -23,7 +23,11 @@ import java.util.*
 import app.akexorcist.bluetotohspp.library.BluetoothSPP
 import android.widget.Toast
 import app.akexorcist.bluetotohspp.library.BluetoothState
-import com.philips.lighting.hue.sdk.PHHueSDK
+import com.av.ajouuniv.avproject2.data.HueSharedPreferences
+import com.philips.lighting.hue.sdk.*
+import com.philips.lighting.model.PHBridge
+import com.philips.lighting.model.PHHueError
+import com.philips.lighting.model.PHHueParsingError
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,10 +39,87 @@ class MainActivity : AppCompatActivity() {
     private var bt: BluetoothSPP? = null
 
     private var phHueSDK : PHHueSDK? = null
+    private var prefs: HueSharedPreferences? = null
+
+    // Local SDK Listener
+    private val phHueListener = object : PHSDKListener {
+
+        override fun onAccessPointsFound(accessPoint: List<PHAccessPoint>) {
+            Log.w(PHHomeActivity.TAG, "Access Points Found. " + accessPoint.size)
+        }
+
+        override fun onCacheUpdated(arg0: List<Int>, bridge: PHBridge) {
+            Log.w(PHHomeActivity.TAG, "On CacheUpdated")
+        }
+
+        override fun onBridgeConnected(b: PHBridge, username: String) {
+            phHueSDK!!.selectedBridge = b
+            phHueSDK!!.enableHeartbeat(b, PHHueSDK.HB_INTERVAL.toLong())
+            phHueSDK!!.lastHeartbeat[b.resourceCache.bridgeConfiguration.ipAddress] = System.currentTimeMillis()
+            prefs!!.setLastConnectedIPAddress(b.resourceCache.bridgeConfiguration.ipAddress)
+            prefs!!.setUsername(username)
+        }
+
+        override fun onAuthenticationRequired(accessPoint: PHAccessPoint) {
+            Log.w(PHHomeActivity.TAG, "Authentication Required.")
+            phHueSDK!!.startPushlinkAuthentication(accessPoint)
+        }
+
+        override fun onConnectionResumed(bridge: PHBridge) {
+            Log.v(PHHomeActivity.TAG, "onConnectionResumed" + bridge.resourceCache.bridgeConfiguration.ipAddress)
+            phHueSDK!!.lastHeartbeat[bridge.resourceCache.bridgeConfiguration.ipAddress] = System.currentTimeMillis()
+            for (i in 0 until phHueSDK!!.disconnectedAccessPoint.size) {
+
+                if (phHueSDK!!.disconnectedAccessPoint[i].ipAddress == bridge.resourceCache.bridgeConfiguration.ipAddress) {
+                    phHueSDK!!.disconnectedAccessPoint.removeAt(i)
+                }
+            }
+
+        }
+
+        override fun onConnectionLost(accessPoint: PHAccessPoint) {
+            Log.v(PHHomeActivity.TAG, "onConnectionLost : " + accessPoint.ipAddress)
+            if (!phHueSDK!!.disconnectedAccessPoint.contains(accessPoint)) {
+                phHueSDK!!.disconnectedAccessPoint.add(accessPoint)
+            }
+        }
+
+        override fun onError(code: Int, message: String) {
+            Log.e(PHHomeActivity.TAG, "on Error Called : $code:$message")
+
+            if (code == PHHueError.NO_CONNECTION) {
+                Log.w(PHHomeActivity.TAG, "On No Connection")
+            } else if (code == PHHueError.AUTHENTICATION_FAILED || code == PHMessageType.PUSHLINK_AUTHENTICATION_FAILED) {
+
+            } else if (code == PHHueError.BRIDGE_NOT_RESPONDING) {
+                Log.w(PHHomeActivity.TAG, "Bridge Not Responding . . . ")
+            } else if (code == PHMessageType.BRIDGE_NOT_FOUND) {
+
+            }
+        }
+
+        override fun onParsingErrors(parsingErrorsList: List<PHHueParsingError>) {
+            for (parsingError in parsingErrorsList) {
+                Log.e(PHHomeActivity.TAG, "ParsingError : " + parsingError.message)
+            }
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Gets an instance of the Hue SDK.
+        phHueSDK = PHHueSDK.create()
+
+        // Set the Device Name (name of your app). This will be stored in your bridge whitelist entry.
+        phHueSDK!!.appName = "QuickStartApp"
+        phHueSDK!!.deviceName = android.os.Build.MODEL
+
+        // Register the PHSDKListener to receive callbacks from the bridge.
+        phHueSDK!!.notificationManager.registerSDKListener(phHueListener)
+
         bt = BluetoothSPP(this)
         if (!bt!!.isBluetoothAvailable()) { //블루투스 사용 불가
             Toast.makeText(applicationContext, "Bluetooth is not available", Toast.LENGTH_SHORT).show()
@@ -87,7 +168,6 @@ class MainActivity : AppCompatActivity() {
             mRecognizer?.startListening(i)
         }
     }
-
 
     override fun onStart() {
         super.onStart()

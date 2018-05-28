@@ -23,7 +23,7 @@ import java.util.*
 import app.akexorcist.bluetotohspp.library.BluetoothSPP
 import android.widget.Toast
 import app.akexorcist.bluetotohspp.library.BluetoothState
-import app.akexorcist.bluetotohspp.library.DeviceList
+import com.philips.lighting.hue.sdk.PHHueSDK
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity() {
     var apiService: ApiInterface? = null
     var textToSpeech : TextToSpeech? = null
     private var bt: BluetoothSPP? = null
+
+    private var phHueSDK : PHHueSDK? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

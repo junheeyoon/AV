@@ -31,6 +31,7 @@ voip통신시, 녹음 및 speech to text 작업 이루어 지지 않음 -> 기�
 기술 : 
 RX JAVA : https://github.com/ReactiveX/RxAndroid
 speech to text : https://developer.android.com/reference/android/speech/package-summary
+IOT : https://developers.meethue.com/
 
 
 

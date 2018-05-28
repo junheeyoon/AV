@@ -24,15 +24,13 @@ import app.akexorcist.bluetotohspp.library.BluetoothSPP
 import android.widget.Toast
 import app.akexorcist.bluetotohspp.library.BluetoothState
 import com.av.ajouuniv.avproject2.data.HueSharedPreferences
+import com.philips.lighting.hue.listener.PHLightListener
 import com.philips.lighting.hue.sdk.*
-import com.philips.lighting.model.PHBridge
-import com.philips.lighting.model.PHHueError
-import com.philips.lighting.model.PHHueParsingError
+import com.philips.lighting.model.*
 
 
 class MainActivity : AppCompatActivity() {
 
-    private val TAG = "MainActivity"
     var mRecognizer: SpeechRecognizer? = null
     var apiService: ApiInterface? = null
     var textToSpeech : TextToSpeech? = null
@@ -56,8 +54,8 @@ class MainActivity : AppCompatActivity() {
             phHueSDK!!.selectedBridge = b
             phHueSDK!!.enableHeartbeat(b, PHHueSDK.HB_INTERVAL.toLong())
             phHueSDK!!.lastHeartbeat[b.resourceCache.bridgeConfiguration.ipAddress] = System.currentTimeMillis()
-            prefs!!.setLastConnectedIPAddress(b.resourceCache.bridgeConfiguration.ipAddress)
-            prefs!!.setUsername(username)
+            prefs!!.lastConnectedIPAddress = b.resourceCache.bridgeConfiguration.ipAddress
+            prefs!!.username = username
         }
 
         override fun onAuthenticationRequired(accessPoint: PHAccessPoint) {
@@ -105,6 +103,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    internal var lightListener: PHLightListener = object : PHLightListener {
+
+        override fun onSuccess() {}
+
+        override fun onStateUpdate(arg0: Map<String, String>, arg1: List<PHHueError>) {
+            Log.w(TAG, "Light has updated")
+        }
+
+        override fun onError(arg0: Int, arg1: String) {}
+
+        override fun onReceivingLightDetails(arg0: PHLight) {}
+
+        override fun onReceivingLights(arg0: List<PHBridgeResource>) {}
+
+        override fun onSearchComplete() {}
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -185,11 +199,11 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
             if (resultCode == Activity.RESULT_OK)
-                bt!!.connect(data);
+                bt!!.connect(data)
         } else if (requestCode == BluetoothState.REQUEST_ENABLE_BT) {
             if (resultCode == Activity.RESULT_OK) {
-                bt!!.setupService();
-                bt!!.startService(BluetoothState.DEVICE_OTHER);
+                bt!!.setupService()
+                bt!!.startService(BluetoothState.DEVICE_OTHER)
             } else {
                 Toast.makeText(getApplicationContext(), "Bluetooth was not enabled.", Toast.LENGTH_SHORT).show();
             }
@@ -213,6 +227,7 @@ class MainActivity : AppCompatActivity() {
                     textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
                     //블루투스 데이터 송신
                     bt!!.send("Text", true)
+                    randomLights()
                 }
                 override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
                     updateServerStatus(t.toString())
@@ -242,4 +257,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun randomLights() {
+        val bridge = phHueSDK!!.selectedBridge
+
+        val allLights = bridge.resourceCache.allLights
+        val rand = Random()
+
+        for (light in allLights) {
+            val lightState = PHLightState()
+            lightState.hue = rand.nextInt(MAX_HUE)
+            // To validate your lightstate is valid (before sending to the bridge) you can use:
+            // String validState = lightState.validateState();
+            bridge.updateLightState(light, lightState, lightListener)
+            //  bridge.updateLightState(light, lightState);   // If no bridge response is required then use this simpler form.
+        }
+    }
+
+    companion object {
+        private val MAX_HUE = 65535
+        val TAG = "MainActivity"
+    }
 }

@@ -43,11 +43,11 @@ class MainActivity : AppCompatActivity() {
     private val phHueListener = object : PHSDKListener {
 
         override fun onAccessPointsFound(accessPoint: List<PHAccessPoint>) {
-            Log.w(PHHomeActivity.TAG, "Access Points Found. " + accessPoint.size)
+            Log.w(MainActivity.TAG, "Access Points Found. " + accessPoint.size)
         }
 
         override fun onCacheUpdated(arg0: List<Int>, bridge: PHBridge) {
-            Log.w(PHHomeActivity.TAG, "On CacheUpdated")
+            Log.w(MainActivity.TAG, "On CacheUpdated")
         }
 
         override fun onBridgeConnected(b: PHBridge, username: String) {
@@ -59,12 +59,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onAuthenticationRequired(accessPoint: PHAccessPoint) {
-            Log.w(PHHomeActivity.TAG, "Authentication Required.")
+            Log.w(MainActivity.TAG, "Authentication Required.")
             phHueSDK!!.startPushlinkAuthentication(accessPoint)
         }
 
         override fun onConnectionResumed(bridge: PHBridge) {
-            Log.v(PHHomeActivity.TAG, "onConnectionResumed" + bridge.resourceCache.bridgeConfiguration.ipAddress)
+            Log.v(MainActivity.TAG, "onConnectionResumed" + bridge.resourceCache.bridgeConfiguration.ipAddress)
             phHueSDK!!.lastHeartbeat[bridge.resourceCache.bridgeConfiguration.ipAddress] = System.currentTimeMillis()
             for (i in 0 until phHueSDK!!.disconnectedAccessPoint.size) {
 
@@ -76,21 +76,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onConnectionLost(accessPoint: PHAccessPoint) {
-            Log.v(PHHomeActivity.TAG, "onConnectionLost : " + accessPoint.ipAddress)
+            Log.v(MainActivity.TAG, "onConnectionLost : " + accessPoint.ipAddress)
             if (!phHueSDK!!.disconnectedAccessPoint.contains(accessPoint)) {
                 phHueSDK!!.disconnectedAccessPoint.add(accessPoint)
             }
         }
 
         override fun onError(code: Int, message: String) {
-            Log.e(PHHomeActivity.TAG, "on Error Called : $code:$message")
+            Log.e(MainActivity.TAG, "on Error Called : $code:$message")
 
             if (code == PHHueError.NO_CONNECTION) {
-                Log.w(PHHomeActivity.TAG, "On No Connection")
+                Log.w(MainActivity.TAG, "On No Connection")
             } else if (code == PHHueError.AUTHENTICATION_FAILED || code == PHMessageType.PUSHLINK_AUTHENTICATION_FAILED) {
 
             } else if (code == PHHueError.BRIDGE_NOT_RESPONDING) {
-                Log.w(PHHomeActivity.TAG, "Bridge Not Responding . . . ")
+                Log.w(MainActivity.TAG, "Bridge Not Responding . . . ")
             } else if (code == PHMessageType.BRIDGE_NOT_FOUND) {
 
             }
@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun onParsingErrors(parsingErrorsList: List<PHHueParsingError>) {
             for (parsingError in parsingErrorsList) {
-                Log.e(PHHomeActivity.TAG, "ParsingError : " + parsingError.message)
+                Log.e(MainActivity.TAG, "ParsingError : " + parsingError.message)
             }
         }
     }

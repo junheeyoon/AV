@@ -6,6 +6,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.view.WindowManager
 
+@Suppress("DEPRECATION")
 class ProgressDialog private constructor() {
 
     private var pdialog: ProgressDialog? = null

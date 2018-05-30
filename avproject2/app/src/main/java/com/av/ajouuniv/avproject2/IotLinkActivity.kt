@@ -143,7 +143,7 @@ class IotLinkActivity : Activity(), OnItemClickListener {
         val lastIpAddress = prefs!!.lastConnectedIPAddress
         val lastUsername = prefs!!.username
 
-        if (lastIpAddress != null && lastIpAddress != "") {
+        if (lastIpAddress != "") {
             val lastAccessPoint = PHAccessPoint()
             lastAccessPoint.ipAddress = lastIpAddress
             lastAccessPoint.username = lastUsername

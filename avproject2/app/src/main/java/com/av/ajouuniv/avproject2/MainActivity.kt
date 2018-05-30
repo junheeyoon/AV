@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "Bluetooth is not available", Toast.LENGTH_SHORT).show()
         }
 
-        bt!!.setOnDataReceivedListener(BluetoothSPP.OnDataReceivedListener { data, message ->
+        bt!!.setOnDataReceivedListener(BluetoothSPP.OnDataReceivedListener { _, _ ->
             //데이터 수신
             val i = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)            //음성인식 intent생성
             i.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)    //데이터 설정
@@ -168,6 +168,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("DEPRECATION")
     private val speechToTextListener = object : RecognitionListener {
         override fun onRmsChanged(rmsdB: Float) {}
         override fun onResults(results: Bundle) {

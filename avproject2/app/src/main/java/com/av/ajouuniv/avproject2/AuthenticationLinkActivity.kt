@@ -44,7 +44,7 @@ class AuthenticationLinkActivity : Activity() {
                     this@AuthenticationLinkActivity.runOnUiThread {
                         val builder = AlertDialog.Builder(this@AuthenticationLinkActivity)
                         builder.setMessage(message).setNeutralButton(R.string.btn_ok
-                        ) { dialog, id -> finish() }
+                        ) { _, _ -> finish() }
 
                         builder.create()
                         builder.show()

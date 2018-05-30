@@ -30,7 +30,7 @@
             android:name=".MainActivity" >
         </activity>
         <activity
-            android:name=".PHPushlinkActivity"
+            android:name=".AuthenticationLinkActivity"
             android:label="@string/app_name" >
         </activity>
     </application>

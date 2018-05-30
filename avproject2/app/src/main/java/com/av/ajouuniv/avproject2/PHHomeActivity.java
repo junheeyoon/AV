@@ -141,7 +141,7 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
         public void onAuthenticationRequired(PHAccessPoint accessPoint) {
             Log.w(TAG, "Authentication Required.");
             phHueSDK.startPushlinkAuthentication(accessPoint);
-            startActivity(new Intent(PHHomeActivity.this, PHPushlinkActivity.class));
+            startActivity(new Intent(PHHomeActivity.this, AuthenticationLinkActivity.class));
            
         }
 

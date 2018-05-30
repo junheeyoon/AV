@@ -359,11 +359,11 @@ server.put('/state/', function (req, res, next) {
     });
 }); 
 
-server.put('/state/', function (req, res, next) {
+server.get('/state/', function (req, res, next) {
     var i = 0;
     var name;
     var body = req.body;
-    connection.query("SELECT * FROM object", function(err, result, fields){
+    connection.query("SELECT object_name FROM object WHERE object_state = 1", function(err, result, fields){
         if(err){
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");

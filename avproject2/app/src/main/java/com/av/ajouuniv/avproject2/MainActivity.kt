@@ -23,6 +23,12 @@ import java.util.*
 import app.akexorcist.bluetotohspp.library.BluetoothSPP
 import android.widget.Toast
 import app.akexorcist.bluetotohspp.library.BluetoothState
+import com.philips.lighting.hue.listener.PHLightListener
+import com.philips.lighting.hue.sdk.PHHueSDK
+import com.philips.lighting.model.PHBridgeResource
+import com.philips.lighting.model.PHHueError
+import com.philips.lighting.model.PHLight
+import com.philips.lighting.model.PHLightState
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,9 +38,30 @@ class MainActivity : AppCompatActivity() {
     var textToSpeech : TextToSpeech? = null
     private var bt: BluetoothSPP? = null
 
+    private var phHueSDK: PHHueSDK? = null
+    // If you want to handle the response from the bridge, create a PHLightListener object.
+    internal var listener: PHLightListener = object : PHLightListener {
+
+        override fun onSuccess() {}
+
+        override fun onStateUpdate(arg0: Map<String, String>, arg1: List<PHHueError>) {
+            Log.w(TAG, "Light has updated")
+        }
+
+        override fun onError(arg0: Int, arg1: String) {}
+
+        override fun onReceivingLightDetails(arg0: PHLight) {}
+
+        override fun onReceivingLights(arg0: List<PHBridgeResource>) {}
+
+        override fun onSearchComplete() {}
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        phHueSDK = PHHueSDK.create()
 
         bt = BluetoothSPP(this)
         if (!bt!!.isBluetoothAvailable()) { //블루투스 사용 불가
@@ -98,6 +125,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        val bridge = phHueSDK!!.selectedBridge
+        if (bridge != null) {
+
+            if (phHueSDK!!.isHeartbeatEnabled(bridge)) {
+                phHueSDK!!.disableHeartbeat(bridge)
+            }
+
+            phHueSDK!!.disconnect(bridge)
+            super.onDestroy()
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
             if (resultCode == Activity.RESULT_OK)
@@ -109,6 +149,22 @@ class MainActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(getApplicationContext(), "Bluetooth was not enabled.", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    fun randomLights() {
+        val bridge = phHueSDK!!.selectedBridge
+
+        val allLights = bridge.resourceCache.allLights
+        val rand = Random()
+
+        for (light in allLights) {
+            val lightState = PHLightState()
+            lightState.hue = rand.nextInt(MAX_HUE)
+            // To validate your lightstate is valid (before sending to the bridge) you can use:
+            // String validState = lightState.validateState();
+            bridge.updateLightState(light, lightState, listener)
+            //  bridge.updateLightState(light, lightState);   // If no bridge response is required then use this simpler form.
         }
     }
 
@@ -127,6 +183,8 @@ class MainActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
                     updateServerStatus(response.body().isOk)
                     textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
+                    // IOT
+                    randomLights()
                     //블루투스 데이터 송신
                     bt!!.send("Text", true)
                 }
@@ -159,6 +217,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+        private val MAX_HUE = 65535
         val TAG = "MainActivity"
     }
 }

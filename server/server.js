@@ -409,28 +409,4 @@ module.exports = server;
 //     //console.log(result.isOk)
 // });
 
-// server.delete('/user/:id', function (req, res) {
-//     var index = 9999;
-//     for (var i = 0; i < db1.userlist.length; i++){
-//         if(db1.userlist[i].id === parseInt(req.params.id)) {
-//             index = i;
-//             break;
-//         }
-//     }    
-//     if(index === 9999){
-//         res.send({
-//             result : {
-//                 isOk : false , error : 'ID가 존재하지 않습니다.'
-//             }
-//         });
-//     } 
-//     else { 
-//         res.send({
-//             result : {
-//                 isOk : true , user : db1.userlist[index]
-//             }
-//         });
-//         db1.userlist.splice(index,1);  
-//     }  
-// });
 

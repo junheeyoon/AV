@@ -129,7 +129,6 @@ class MainActivity : AppCompatActivity() {
                     textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
                     //블루투스 데이터 송신
                     bt!!.send("Text", true)
-                    randomLights()
                 }
                 override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
                     updateServerStatus(t.toString())

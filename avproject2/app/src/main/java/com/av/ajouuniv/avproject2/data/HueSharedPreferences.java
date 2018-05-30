@@ -13,11 +13,6 @@ public class HueSharedPreferences {
 
     private Editor mSharedPreferencesEditor = null;
 
-
-    public void create() {
-
-    }
-
     public static HueSharedPreferences getInstance(Context ctx) {
         if (instance == null) {
             instance = new HueSharedPreferences(ctx);

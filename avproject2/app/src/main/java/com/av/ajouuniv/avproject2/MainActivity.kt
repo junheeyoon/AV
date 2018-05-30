@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-        apiService = ApiClient.getClient().create(ApiInterface::class.java)
+        apiService = ApiClient.client.create(ApiInterface::class.java)
         textToSpeech = TextToSpeech(this,textToSpeechListener)
 
         // 블루투스로 바꿀예정..

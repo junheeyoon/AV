@@ -376,7 +376,7 @@ server.get('/state/', function (req, res, next) {
                     console.log(1);
                     if(parseInt(body.message.indexOf('상태')) !== -1){
                         buffer = buffer + ' ' + result[i].object_name;
-                        
+                        console.log(buffer);
                     }
                     else {
                         res.json({

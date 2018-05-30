@@ -434,31 +434,3 @@ module.exports = server;
 //     }  
 // });
 
-// server.put('/user/:id', function (req, res) {
-//     var body = req.body;
-//     var id = 0;
-//     var index;
-
-//     for (var i = 0; i < db.length; i++){
-//         if(db1.userlist[i].id === parseInt(req.params.id)){
-//             index = i;
-//             db1.userlist.splice(index,1);
-//             body['id'] = parseInt(req.params.id);
-//             db1.userlist.splice(index,0,body);
-//             res.send({   
-//                 result : {
-//                     isOk : true, 
-//                     user : body
-//                 }
-//             })
-//         return;
-//         }
-//     }    
-//     res.send({   
-//         result : {
-//             isOk : false, 
-//             error : 'ID가 존재하지 않습니다.'
-//         }
-//     })
-//     //db.push(body);
-// });

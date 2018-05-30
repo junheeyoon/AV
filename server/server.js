@@ -374,26 +374,14 @@ server.get('/state/', function (req, res, next) {
             if(parseInt(body.message.indexOf('관리자')) !== -1){
                 for(i = 0; i < result.length; i++){
                     console.log(1);
-                    name = body.message.indexOf(result[i].object_name);
-                    if(parseInt(name) !== -1){
-                        console.log(2);
-                        if(parseInt(body.message.indexOf('켜')) !== -1){
-                            console.log(3);
-                            connection.query("UPDATE object SET object_state = 1 WHERE object_name = ?", result[i].object_name, function(error, rows){ 
-                                if(error){ 
-                                    throw error;
-                                }	
-                                else{ 
-                                    console.log(rows); 
-                                } 
-                            });
-                            res.json({
-                                        isOk : true,
-                                        message :  result[i].object_name + '이 켜졌습니다.'
-                                        //state : result[i].object_state
+                    if(parseInt(body.message.indexOf('상태')) !== -1){
+                        res.json({
+                            isOk : true,
+                            message :  result[i].object_name + '이 켜졌습니다.'
+                            //state : result[i].object_state
                                 
-                            });
-                        }
+                        });
+                    }
                         else if(parseInt(body.message.indexOf('꺼')) !== -1){
                             connection.query("UPDATE object SET object_state = 0 WHERE object_name = ?", result[i].object_name, function(error, rows){ 
                                 if(error){ 

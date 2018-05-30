@@ -2,7 +2,6 @@ package com.av.ajouuniv.avproject2;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -80,7 +79,7 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
             lastAccessPoint.setUsername(lastUsername);
            
             if (!phHueSDK.isAccessPointConnected(lastAccessPoint)) {
-               PHWizardAlertDialog.getInstance().showProgressDialog(R.string.connecting, PHHomeActivity.this);
+               ProgressDialog.Companion.getInstance().showProgressDialog(R.string.connecting, PHHomeActivity.this);
                phHueSDK.connect(lastAccessPoint);
             }
         }
@@ -105,7 +104,7 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
         public void onAccessPointsFound(List<PHAccessPoint> accessPoint) {
             Log.w(TAG, "Access Points Found. " + accessPoint.size());
 
-            PHWizardAlertDialog.getInstance().closeProgressDialog();
+            ProgressDialog.Companion.getInstance().closeProgressDialog();
             if (accessPoint != null && accessPoint.size() > 0) {
                     phHueSDK.getAccessPointsFound().clear();
                     phHueSDK.getAccessPointsFound().addAll(accessPoint);
@@ -134,7 +133,7 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
             phHueSDK.getLastHeartbeat().put(b.getResourceCache().getBridgeConfiguration() .getIpAddress(), System.currentTimeMillis());
             prefs.setLastConnectedIPAddress(b.getResourceCache().getBridgeConfiguration().getIpAddress());
             prefs.setUsername(username);
-            PHWizardAlertDialog.getInstance().closeProgressDialog();     
+            ProgressDialog.Companion.getInstance().closeProgressDialog();
             startMainActivity();
         }
 
@@ -178,15 +177,15 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
                 Log.w(TAG, "On No Connection");
             } 
             else if (code == PHHueError.AUTHENTICATION_FAILED || code== PHMessageType.PUSHLINK_AUTHENTICATION_FAILED) {
-                PHWizardAlertDialog.getInstance().closeProgressDialog();
+                ProgressDialog.Companion.getInstance().closeProgressDialog();
             } 
             else if (code == PHHueError.BRIDGE_NOT_RESPONDING) {
                 Log.w(TAG, "Bridge Not Responding . . . ");
-                PHWizardAlertDialog.getInstance().closeProgressDialog();
+                ProgressDialog.Companion.getInstance().closeProgressDialog();
                 PHHomeActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        PHWizardAlertDialog.showErrorDialog(PHHomeActivity.this, message, R.string.btn_ok);
+                        ProgressDialog.Companion.showErrorDialog(PHHomeActivity.this, message, R.string.btn_ok);
                     }
                 }); 
 
@@ -200,11 +199,11 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
                     lastSearchWasIPScan=true;
                 }
                 else {
-                    PHWizardAlertDialog.getInstance().closeProgressDialog();
+                    ProgressDialog.Companion.getInstance().closeProgressDialog();
                     PHHomeActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            PHWizardAlertDialog.showErrorDialog(PHHomeActivity.this, message, R.string.btn_ok);
+                            ProgressDialog.Companion.showErrorDialog(PHHomeActivity.this, message, R.string.btn_ok);
                         }
                     });  
                 }
@@ -261,12 +260,12 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
                 phHueSDK.disconnect(connectedBridge);
             }
         }
-        PHWizardAlertDialog.getInstance().showProgressDialog(R.string.connecting, PHHomeActivity.this);
+        ProgressDialog.Companion.getInstance().showProgressDialog(R.string.connecting, PHHomeActivity.this);
         phHueSDK.connect(accessPoint);  
     }
     
     public void doBridgeSearch() {
-        PHWizardAlertDialog.getInstance().showProgressDialog(R.string.search_progress, PHHomeActivity.this);
+        ProgressDialog.Companion.getInstance().showProgressDialog(R.string.search_progress, PHHomeActivity.this);
         PHBridgeSearchManager sm = (PHBridgeSearchManager) phHueSDK.getSDKService(PHHueSDK.SEARCH_BRIDGE);
         // Start the UPNP Searching of local bridges.
         sm.search(true, true);

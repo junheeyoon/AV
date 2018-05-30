@@ -413,36 +413,3 @@ server.listen(3000, function () {
 module.exports = server;
 
 
-
-// server.post('/user/', function (req, res) {
-//     var body = req.body;
-//     var id = 0; 
-//     var age = parseInt(body.age);
-
-//     for (var i = 0; i < db1.userlist.length; i++){
-//         if(id < db1.userlist[i].id){
-//         id = db1.userlist[i].id;                     
-//         }
-//     }
-//     body['age'] = age; 
-//     //console.log(body.name)
-//     body['id'] = ++length;
-//     db1.userlist.push(body);
-//     /*var result = {
-//                     result : {
-//                         isOk : true, 
-//                         user : body
-//                     }
-//     }       
-//     res.send(result)*/
-//     res.send({   
-//         result : {
-//             isOk : true, 
-//             user : body
-//         }
-//     })
-//     //console.log(result.result.isOk)
-//     //console.log(result.isOk)
-// });
-
-

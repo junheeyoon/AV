@@ -412,18 +412,7 @@ server.listen(3000, function () {
 
 module.exports = server;
 
-// server.get('/user/:id', function (req, res) {
 
-//     for (var i = 0; i < db1.userlist.length; i++){
-//         if(db1.userlist[i].id === parseInt(req.params.id)){
-//             res.send(db1.userlist[i]);
-//             return;
-//         }
-//     }
-//     res.send({ 
-//         error : 'ID가 존재하지 않습니다.'
-//     });
-// });
 
 // server.post('/user/', function (req, res) {
 //     var body = req.body;

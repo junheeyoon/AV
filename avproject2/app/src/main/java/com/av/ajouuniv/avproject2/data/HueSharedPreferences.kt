@@ -10,13 +10,13 @@ class HueSharedPreferences private constructor(appContext: Context) {
     private var mSharedPreferencesEditor: Editor? = null
 
 
-    val username: String
+    var username: String = ""
         get() {
             val username = mSharedPreferences!!.getString(LAST_CONNECTED_USERNAME, "")
             return username
         }
 
-    val lastConnectedIPAddress: String
+    var lastConnectedIPAddress: String = ""
         get() = mSharedPreferences!!.getString(LAST_CONNECTED_IP, "")
 
     init {

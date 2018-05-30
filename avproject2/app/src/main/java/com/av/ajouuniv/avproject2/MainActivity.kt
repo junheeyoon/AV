@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-        apiService = ApiClient.client.create(ApiInterface::class.java)
+        apiService = ApiClient.client?.create(ApiInterface::class.java)
         textToSpeech = TextToSpeech(this,textToSpeechListener)
 
         // 블루투스로 바꿀예정..
@@ -178,7 +178,7 @@ class MainActivity : AppCompatActivity() {
             mResult.toArray(rs)
             updateStatus(rs[0])
 
-            val call = apiService!!.updateDevice(rs[0])
+            val call = apiService!!.updateDevice(rs[0].toString())
             call.enqueue(object : Callback<NetworkExample> {
                 override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
                     updateServerStatus(response.body().isOk)

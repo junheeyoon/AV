@@ -1,74 +1,74 @@
 [
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_launcher.png.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-mdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_press_smartbridge.xml.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-xxhdpi\\press_smartbridge.xml"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_selectbridge_item.xml.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\layout\\selectbridge_item.xml"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_press_smartbridge.xml.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-hdpi\\press_smartbridge.xml"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_launcher.png.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_selectbridge_item.xml.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\layout\\selectbridge_item.xml"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_press_smartbridge.xml.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-ldpi\\press_smartbridge.xml"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_press_smartbridge.xml.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-ldpi\\press_smartbridge.xml"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_pushlink_image.png.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-nodpi\\pushlink_image.png"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-xxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_launcher.png.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-xhdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_pushlink.xml.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\layout\\pushlink.xml"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_launcher.png.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-xxhdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_bridgelistlinear.xml.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\layout\\bridgelistlinear.xml"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_pushlink.xml.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\layout\\pushlink.xml"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_pushlink_image.png.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-nodpi\\pushlink_image.png"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_image_clear.png.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-mdpi\\image_clear.png"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\layout\\activity_main.xml"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_press_smartbridge.xml.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-xhdpi\\press_smartbridge.xml"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\menu_home.xml.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\menu\\home.xml"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_press_smartbridge.xml.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-hdpi\\press_smartbridge.xml"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-xhdpi\\ic_launcher.png"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\menu_home.xml.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\menu\\home.xml"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\menu_bridgelist.xml.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\menu\\bridgelist.xml"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_press_smartbridge.xml.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-mdpi\\press_smartbridge.xml"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_press_smartbridge.xml.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-xxhdpi\\press_smartbridge.xml"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_press_smartbridge.xml.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-xhdpi\\press_smartbridge.xml"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\menu_bridgelist.xml.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\menu\\bridgelist.xml"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_press_smartbridge.xml.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-mdpi\\press_smartbridge.xml"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_home.xml.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\layout\\home.xml"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_home.xml.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\layout\\home.xml"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_bridgelistlinear.xml.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\layout\\bridgelistlinear.xml"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-mdpi\\ic_launcher.png"
     },
     {
-        "merged": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
-        "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\layout\\activity_main.xml"
+        "merged": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_image_clear.png.flat",
+        "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\drawable-mdpi\\image_clear.png"
     }
 ]

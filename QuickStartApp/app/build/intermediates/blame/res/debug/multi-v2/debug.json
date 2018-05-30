@@ -1,39 +1,75 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\values-sw720dp-land-v13_values-sw720dp-land-v13.arsc.flat",
+            "outputFile": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\values_values.arsc.flat",
             "map": [
                 {
-                    "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\values-sw720dp-land\\dimens.xml",
+                    "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\values\\dimens.xml",
                     "from": {
-                        "startLines": "6",
-                        "startColumns": "4",
-                        "startOffsets": "200",
-                        "endColumns": "58",
-                        "endOffsets": "254"
+                        "startLines": "3,4",
+                        "startColumns": "4,4",
+                        "startOffsets": "92,151",
+                        "endColumns": "57,55",
+                        "endOffsets": "145,202"
                     },
                     "to": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "58",
-                        "endOffsets": "109"
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,113",
+                        "endColumns": "57,55",
+                        "endOffsets": "108,164"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "4,3,12,7,16,11,8,17,6,22,10,15,18,20,21,5,26,9,23,28,14,13,29,25,19,27,24",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "112,59,561,293,955,522,354,998,244,1283,467,794,1051,1171,1233,166,1523,408,1328,1705,673,608,1752,1472,1114,1610,1401",
+                        "endColumns": "52,51,45,59,41,37,52,51,47,43,53,159,61,60,48,76,85,57,71,45,119,63,64,49,55,93,69",
+                        "endOffsets": "160,106,602,348,992,555,402,1045,287,1322,516,949,1108,1227,1277,238,1604,461,1395,1746,788,667,1812,1517,1165,1699,1466"
+                    },
+                    "to": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "169,222,274,320,380,422,460,513,565,613,657,711,871,933,994,1043,1120,1206,1264,1336,1382,1502,1566,1631,1681,1737,1831",
+                        "endColumns": "52,51,45,59,41,37,52,51,47,43,53,159,61,60,48,76,85,57,71,45,119,63,64,49,55,93,69",
+                        "endOffsets": "217,269,315,375,417,455,508,560,608,652,706,866,928,989,1038,1115,1201,1259,1331,1377,1497,1561,1626,1676,1732,1826,1896"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\values\\styles.xml",
+                    "from": {
+                        "startLines": "6,15",
+                        "startColumns": "4,4",
+                        "startOffsets": "192,525",
+                        "endLines": "12,17",
+                        "endColumns": "12,12",
+                        "endOffsets": "484,682"
+                    },
+                    "to": {
+                        "startLines": "31,38",
+                        "startColumns": "4,4",
+                        "startOffsets": "1901,2192",
+                        "endLines": "37,40",
+                        "endColumns": "12,12",
+                        "endOffsets": "2187,2347"
                     }
                 }
             ]
         },
         {
-            "outputFile": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\values-v11_values-v11.arsc.flat",
+            "outputFile": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\values-v11_values-v11.arsc.flat",
             "map": [
                 {
-                    "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\values-v11\\styles.xml",
+                    "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\values-v11\\styles.xml",
                     "from": {
                         "startLines": "6",
                         "startColumns": "4",
-                        "startOffsets": "177",
+                        "startOffsets": "183",
                         "endLines": "8",
                         "endColumns": "12",
-                        "endOffsets": "309"
+                        "endOffsets": "317"
                     },
                     "to": {
                         "startLines": "2",
@@ -47,17 +83,39 @@
             ]
         },
         {
-            "outputFile": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\values-v14_values-v14.arsc.flat",
+            "outputFile": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\values-sw720dp-land-v13_values-sw720dp-land-v13.arsc.flat",
             "map": [
                 {
-                    "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\values-v14\\styles.xml",
+                    "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\values-sw720dp-land\\dimens.xml",
+                    "from": {
+                        "startLines": "6",
+                        "startColumns": "4",
+                        "startOffsets": "206",
+                        "endColumns": "58",
+                        "endOffsets": "260"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "58",
+                        "endOffsets": "109"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\values-v14_values-v14.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\Users\\a\\Documents\\AV\\QuickStartApp\\app\\src\\main\\res\\values-v14\\styles.xml",
                     "from": {
                         "startLines": "7",
                         "startColumns": "4",
-                        "startOffsets": "220",
+                        "startOffsets": "227",
                         "endLines": "9",
                         "endColumns": "12",
-                        "endOffsets": "366"
+                        "endOffsets": "375"
                     },
                     "to": {
                         "startLines": "2",
@@ -66,64 +124,6 @@
                         "endLines": "4",
                         "endColumns": "12",
                         "endOffsets": "201"
-                    }
-                }
-            ]
-        },
-        {
-            "outputFile": "E:\\AV\\QuickStartApp\\app\\build\\intermediates\\res\\merged\\debug\\values_values.arsc.flat",
-            "map": [
-                {
-                    "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\values\\strings.xml",
-                    "from": {
-                        "startLines": "4,3,12,7,16,11,8,17,6,22,10,15,18,20,21,5,26,9,23,28,14,13,29,25,19,27,24",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "108,56,549,286,939,511,346,981,238,1261,457,779,1033,1151,1212,161,1497,399,1305,1677,659,595,1723,1447,1095,1583,1377",
-                        "endColumns": "52,51,45,59,41,37,52,51,47,43,53,159,61,60,48,76,85,57,71,45,119,63,64,49,55,93,69",
-                        "endOffsets": "156,103,590,341,976,544,394,1028,281,1300,506,934,1090,1207,1256,233,1578,452,1372,1718,774,654,1783,1492,1146,1672,1442"
-                    },
-                    "to": {
-                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "169,222,274,320,380,422,460,513,565,613,657,711,871,933,994,1043,1120,1206,1264,1336,1382,1502,1566,1631,1681,1737,1831",
-                        "endColumns": "52,51,45,59,41,37,52,51,47,43,53,159,61,60,48,76,85,57,71,45,119,63,64,49,55,93,69",
-                        "endOffsets": "217,269,315,375,417,455,508,560,608,652,706,866,928,989,1038,1115,1201,1259,1331,1377,1497,1561,1626,1676,1732,1826,1896"
-                    }
-                },
-                {
-                    "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\values\\dimens.xml",
-                    "from": {
-                        "startLines": "3,4",
-                        "startColumns": "4,4",
-                        "startOffsets": "89,147",
-                        "endColumns": "57,55",
-                        "endOffsets": "142,198"
-                    },
-                    "to": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,113",
-                        "endColumns": "57,55",
-                        "endOffsets": "108,164"
-                    }
-                },
-                {
-                    "source": "E:\\AV\\QuickStartApp\\app\\src\\main\\res\\values\\styles.xml",
-                    "from": {
-                        "startLines": "6,15",
-                        "startColumns": "4,4",
-                        "startOffsets": "186,510",
-                        "endLines": "12,17",
-                        "endColumns": "12,12",
-                        "endOffsets": "472,665"
-                    },
-                    "to": {
-                        "startLines": "31,38",
-                        "startColumns": "4,4",
-                        "startOffsets": "1901,2192",
-                        "endLines": "37,40",
-                        "endColumns": "12,12",
-                        "endOffsets": "2187,2347"
                     }
                 }
             ]

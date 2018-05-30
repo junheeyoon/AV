@@ -359,6 +359,80 @@ server.put('/state/', function (req, res, next) {
     });
 }); 
 
+server.put('/state/', function (req, res, next) {
+    var i = 0;
+    var name;
+    var body = req.body;
+    connection.query("SELECT * FROM object", function(err, result, fields){
+        if(err){
+            console.log(err);
+            console.log("쿼리문에 오류가 있습니다.");
+        }
+        else {
+            console.log('Access');
+            console.log(result);
+            if(parseInt(body.message.indexOf('관리자')) !== -1){
+                for(i = 0; i < result.length; i++){
+                    console.log(1);
+                    name = body.message.indexOf(result[i].object_name);
+                    if(parseInt(name) !== -1){
+                        console.log(2);
+                        if(parseInt(body.message.indexOf('켜')) !== -1){
+                            console.log(3);
+                            connection.query("UPDATE object SET object_state = 1 WHERE object_name = ?", result[i].object_name, function(error, rows){ 
+                                if(error){ 
+                                    throw error;
+                                }	
+                                else{ 
+                                    console.log(rows); 
+                                } 
+                            });
+                            res.json({
+                                        isOk : true,
+                                        message :  result[i].object_name + '이 켜졌습니다.'
+                                        //state : result[i].object_state
+                                
+                            });
+                        }
+                        else if(parseInt(body.message.indexOf('꺼')) !== -1){
+                            connection.query("UPDATE object SET object_state = 0 WHERE object_name = ?", result[i].object_name, function(error, rows){ 
+                                if(error){ 
+                                    throw error;
+                                }	 
+                                else{ 
+                                    console.log(rows); 
+                                } 
+                            });
+                            res.json({
+                                result : {
+                                        isOk : true,
+                                        message :  result[i].object_name + '이 꺼졌습니다.'
+                                        //state : result[i].object_state
+                                }
+                            });
+                        }
+                        else {
+                            res.json({
+                                result : {
+                                        isOk : false, 
+                                        message : '다시 명령을 해주세요.'
+                                }
+                            });
+                        }
+                    }                    
+                }
+            } else {
+                res.json({
+            
+                    isOk : false, 
+                    message : '관리자가 아닙니다.'
+            
+                });
+            }
+        }
+    });
+}); 
+
 server.listen(3000, function () {
     console.log('Example app listening on port 3000!');
 });

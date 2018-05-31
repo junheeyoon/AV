@@ -160,7 +160,8 @@ class MainActivity : AppCompatActivity() {
 
         for (light in allLights) {
             val lightState = PHLightState()
-            lightState.hue = rand.nextInt(MAX_HUE)
+            lightState.effectMode = PHLight.PHLightEffectMode.EFFECT_COLORLOOP
+            //lightState.hue = rand.nextInt(MAX_HUE)
             // To validate your lightstate is valid (before sending to the bridge) you can use:
             // String validState = lightState.validateState();
             bridge.updateLightState(light, lightState, listener)
@@ -209,6 +210,7 @@ class MainActivity : AppCompatActivity() {
                     // IOT
                     if(response.body().isOk){
                         trunOnLights()
+                        randomLights()
                     } else {
                         trunOffLights()
                     }

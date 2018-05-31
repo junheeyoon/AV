@@ -202,25 +202,27 @@ class MainActivity : AppCompatActivity() {
             mResult.toArray(rs)
             updateStatus(rs[0])
 
-            val call = apiService!!.updateDevice(rs[0].toString())
-            call.enqueue(object : Callback<NetworkExample> {
-                override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
-                    updateServerStatus(response.body().isOk.toString())
-                    textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
-                    // IOT
-                    if(response.body().isOk){
-                        trunOnLights()
-                        randomLights()
-                    } else {
-                        trunOffLights()
+            if(rs[0].toString().startsWith("화상")){
+                bt!!.send("Text", true)
+            }else{
+                val call = apiService!!.updateDevice(rs[0].toString())
+                call.enqueue(object : Callback<NetworkExample> {
+                    override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
+                        updateServerStatus(response.body().isOk.toString())
+                        textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
+                        // IOT
+                        if(response.body().isOk){
+                            trunOnLights()
+                            randomLights()
+                        } else {
+                            trunOffLights()
+                        }
                     }
-                    //블루투스 데이터 송신
-                    bt!!.send("Text", true)
-                }
-                override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
-                    updateServerStatus(t.toString())
-                }
-            })
+                    override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
+                        updateServerStatus(t.toString())
+                    }
+                })
+            }
         }
         override fun onReadyForSpeech(params: Bundle) {}
         override fun onEndOfSpeech() {}

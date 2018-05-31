@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() { //데이터 수신
             public void onDataReceived(byte[] data, String message) {
                 Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(MainActivity.this, VideoActivity.class));
+
             }
         });
 
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void callEnd() {
                 super.callEnd();
+                sendBroadcast(new Intent(VideoActivity.RECEIVE_FINISH_VIDEO_ACTIVITY));
                 mHangUp.setVisibility(View.GONE);
                 mToggleMute.setVisibility(View.GONE);
                 mToggleSpeaker.setVisibility(View.GONE);

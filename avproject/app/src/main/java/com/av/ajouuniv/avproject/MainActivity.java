@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        startService(new Intent(this, CallMonitorService.class));
+
         bt = new BluetoothSPP(this);
         bt.setupService();
         bt.startService(BluetoothState.DEVICE_ANDROID);

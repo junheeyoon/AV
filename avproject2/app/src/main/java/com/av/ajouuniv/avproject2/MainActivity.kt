@@ -114,12 +114,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        if (!bt!!.isBluetoothEnabled()) { //
+        if (!bt!!.isBluetoothEnabled()) {
             val intent : Intent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
             startActivityForResult(intent, BluetoothState.REQUEST_ENABLE_BT)
         } else {
             if (!bt!!.isServiceAvailable()) {
-                bt!!.setupService();
+                bt!!.setupService()
                 bt!!.startService(BluetoothState.DEVICE_ANDROID)
             }
         }
@@ -168,6 +168,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun trunOffLights() {
+        val bridge = phHueSDK!!.selectedBridge
+
+        val allLights = bridge.resourceCache.allLights
+        for (light in allLights) {
+            val lightState = PHLightState()
+            lightState.isOn = false
+            bridge.updateLightState(light, lightState, listener)
+        }
+    }
+
+    fun trunOnLights() {
+        val bridge = phHueSDK!!.selectedBridge
+
+        val allLights = bridge.resourceCache.allLights
+        for (light in allLights) {
+            val lightState = PHLightState()
+            lightState.isOn = true
+            bridge.updateLightState(light, lightState, listener)
+        }
+    }
+
     @Suppress("DEPRECATION")
     private val speechToTextListener = object : RecognitionListener {
         override fun onRmsChanged(rmsdB: Float) {}
@@ -182,10 +204,14 @@ class MainActivity : AppCompatActivity() {
             val call = apiService!!.updateDevice(rs[0].toString())
             call.enqueue(object : Callback<NetworkExample> {
                 override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
-                    updateServerStatus(response.body().isOk)
+                    updateServerStatus(response.body().isOk.toString())
                     textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
                     // IOT
-                    randomLights()
+                    if(response.body().isOk){
+                        trunOnLights()
+                    } else {
+                        trunOffLights()
+                    }
                     //블루투스 데이터 송신
                     bt!!.send("Text", true)
                 }

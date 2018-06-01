@@ -309,13 +309,20 @@ server.put('/state/', function (req, res, next) {
                 }
 
                 if(body.message.indexOf('문')){
-                    if(body.message.indexOf('닫아'))
+                    if(body.message.indexOf('닫아')){
                         res.json({
                             isOk : true,
                             message :  '현관문이 닫혔습니다.'
                             //state : result[i].object_state
                         });
-            
+                    }
+                    if(body.message.indexOf('열')){
+                        res.json({
+                            isOk : true,
+                            message :  '현관문이 열렸습니다.'
+                            //state : result[i].object_state
+                        });
+                    }
                 }
                 for(i = 0; i < result.length; i++){
                     console.log(1);

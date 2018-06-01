@@ -339,10 +339,10 @@ server.put('/state/', function (req, res, next) {
                         }
                         else {
                             res.json({
-                                result : {
+                                
                                         isOk : false, 
                                         message : '다시 명령을 해주세요.'
-                                }
+                                
                             });
                         }
                     }                    

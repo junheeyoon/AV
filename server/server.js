@@ -330,11 +330,11 @@ server.put('/state/', function (req, res, next) {
                                 } 
                             });
                             res.json({
-                                result : {
+                                
                                         isOk : true,
                                         message :  result[i].object_name + '이 꺼졌습니다.'
                                         //state : result[i].object_state
-                                }
+                                
                             });
                         }
                         else {

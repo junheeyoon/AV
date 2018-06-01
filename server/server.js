@@ -299,27 +299,25 @@ server.put('/state/', function (req, res, next) {
             console.log(result);
             if(parseInt(body.message.indexOf('관리자')) !== -1){
                 
-                
                 for(i = 0; i < result.length; i++){
                     console.log(1);
-                    if(body.message.indexOf('가스')){
+                    if(parseInt(body.message.indexOf('가스')) !== -1){
                         res.json({
                             isOk : true,
                             message :  '가스레인지가 꺼졌습니다.'
                             //state : result[i].object_state
-                    
                         });
                     }
     
-                    if(body.message.indexOf('문')){
-                        if(body.message.indexOf('닫아')){
+                    if(parseInt(body.message.indexOf('문')) !== -1){
+                        if(parseInt(body.message.indexOf('닫아')) !== -1){
                             res.json({
                                 isOk : true,
                                 message :  '현관문이 닫혔습니다.'
                                 //state : result[i].object_state
                             });
                         }
-                        if(body.message.indexOf('열')){
+                        if(parseInt(body.message.indexOf('열')) !== -1){
                             res.json({
                                 isOk : true,
                                 message :  '현관문이 열렸습니다.'

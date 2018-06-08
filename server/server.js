@@ -289,7 +289,7 @@ server.put('/state/', function (req, res, next) {
     var i = 0;
     var name;
     var body = req.body;
-    body.message = "관리자인데 전등좀 꺼줘";
+    body.message = "관리자인데 전등좀 켜줘";
     connection.query("SELECT * FROM object", function(err, result, fields){
         if(err){
             console.log(err);

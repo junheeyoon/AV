@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:keepScreenOn="true">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/mainlayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -26,15 +26,33 @@
             android:layout_below="@+id/speech_to_text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-
         <Button
             android:id="@+id/speech_to_text_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:layout_marginBottom="83dp"
             android:text="speech_to_text" />
 
-    </RelativeLayout>
+        <Button
+            android:id="@+id/turn_on_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:text="ON" />
+
+        <Button
+            android:id="@+id/turn_off_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:text="OFF" />
+
+        <Button
+            android:id="@+id/repeat_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:text="REPEAT" />
+
+    </LinearLayout>
 </FrameLayout>

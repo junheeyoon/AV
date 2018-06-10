@@ -76,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void callConnected() {
                 super.callConnected();
-                Linphone.toggleSpeaker(Linphone.getVideoEnabled());
+                //Linphone.toggleSpeaker(Linphone.getVideoEnabled());
+                Linphone.toggleSpeaker(true);
                 Linphone.toggleMicro(false);
                 mToggleSpeaker.setVisibility(View.VISIBLE);
                 mToggleMute.setVisibility(View.VISIBLE);

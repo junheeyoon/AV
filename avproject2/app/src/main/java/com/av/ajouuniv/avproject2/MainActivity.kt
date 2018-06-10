@@ -213,7 +213,6 @@ class MainActivity : AppCompatActivity() {
 
     fun trunOffLights() {
         val bridge = phHueSDK!!.selectedBridge
-
         val allLights = bridge.resourceCache.allLights
         for (light in allLights) {
             val lightState = PHLightState()

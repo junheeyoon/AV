@@ -110,6 +110,48 @@ class MainActivity : AppCompatActivity() {
             mRecognizer?.setRecognitionListener(speechToTextListener)                                        //음성인식 리스너 등록
             mRecognizer?.startListening(i)
         }
+
+        val turnOnBtn = findViewById<Button>(R.id.turn_on_btn)
+        turnOnBtn.setOnClickListener {
+            val call = apiService!!.updateDevice("관리자 전등 켜 줘")
+            call.enqueue(object : Callback<NetworkExample> {
+                override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
+                    textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
+                    // IOT
+                    trunOnLights()
+                }
+                override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
+
+                }
+            })
+        }
+
+        val turnOffBtn = findViewById<Button>(R.id.turn_off_btn)
+        turnOffBtn.setOnClickListener {
+            val call = apiService!!.updateDevice("관리자 전등 꺼 줘")
+            call.enqueue(object : Callback<NetworkExample> {
+                override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
+                    textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
+                    // IOT
+                    trunOffLights()
+                }
+                override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
+
+                }
+            })
+        }
+
+        val repeatBtn = findViewById<Button>(R.id.repeat_btn)
+        repeatBtn.setOnClickListener {
+            val call = apiService!!.updateDevice("관리자 켜")
+            call.enqueue(object : Callback<NetworkExample> {
+                override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
+                    textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
+                }
+                override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
+                }
+            })
+        }
     }
 
     override fun onStart() {
@@ -204,24 +246,37 @@ class MainActivity : AppCompatActivity() {
 
             if(rs[0].toString().startsWith("화상")){
                 bt!!.send("Text", true)
-            }else{
-                val call = apiService!!.updateDevice(rs[0].toString())
-                call.enqueue(object : Callback<NetworkExample> {
-                    override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
-                        updateServerStatus(response.body().isOk.toString())
-                        textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
-                        // IOT
-                        if(response.body().isOk){
-                            trunOnLights()
-                            randomLights()
-                        } else {
-                            trunOffLights()
-                        }
+            } else {
+                if(rs[0].toString().contains("관리자")) {
+                    if (rs[0].toString().contains("켜")) {
+                        textToSpeech!!.speak("관리자님의 요청으로 전등이 켜졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
+                        trunOnLights()
+                    } else if (rs[0].toString().contains("꺼")) {
+                        textToSpeech!!.speak("관리자님의 요청으로 전등이 꺼졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
+                        trunOffLights()
+                    } else {
+                        textToSpeech!!.speak("다시 한 번 명령해 주세요",TextToSpeech.QUEUE_FLUSH, null)
                     }
-                    override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
-                        updateServerStatus(t.toString())
-                    }
-                })
+                } else {
+                    textToSpeech!!.speak("관리자가 아닙니다? 누구냐? 너?",TextToSpeech.QUEUE_FLUSH, null)
+                }
+//                val call = apiService!!.updateDevice(rs[0].toString())
+//                call.enqueue(object : Callback<NetworkExample> {
+//                    override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
+//                        updateServerStatus(response.body().isOk.toString())
+//                        textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
+//                        // IOT
+//                        if(response.body().isOk){
+//                            trunOnLights()
+//                            randomLights()
+//                        } else {
+//                            trunOffLights()
+//                        }
+//                    }
+//                    override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
+//                        updateServerStatus(t.toString())
+//                    }
+//                })
             }
         }
         override fun onReadyForSpeech(params: Bundle) {}
@@ -246,6 +301,8 @@ class MainActivity : AppCompatActivity() {
             labelView.text = status
         }
     }
+
+
 
     companion object {
         private val MAX_HUE = 65535

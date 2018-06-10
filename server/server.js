@@ -376,12 +376,7 @@ server.put('/state/', function (req, res, next) {
                         }
                     }                                        
                 }
-                res.json({
-                            
-                    isOk : false, 
-                    message : '다시 명령을 해주세요.'
-            
-                });
+                
             } 
             else {
                 res.json({

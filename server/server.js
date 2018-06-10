@@ -375,15 +375,15 @@ server.put('/state/', function (req, res, next) {
                             });
                         }
                     }                                        
-                }
-                if(i == result.length){
-                    res.json({
+                }                                
+            }
+            else if(i === result.length){
+                res.json({
                                 
                         isOk : false, 
                         message : '다시 명령을 해주세요.'
                 
-                    });
-                }
+                });
                 
             } 
             else {

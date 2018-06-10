@@ -284,7 +284,7 @@ server.delete('/device/:object_name', function (req, res, next) {
 //         }
 //     });
 // }); 
-
+//test
 server.put('/state/', function (req, res, next) {
     var i = 0;
     var name;

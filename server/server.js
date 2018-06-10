@@ -331,6 +331,7 @@ server.put('/state/', function (req, res, next) {
                         console.log(2);
                         if(parseInt(body.message.indexOf('켜')) !== -1){
                             console.log(3);
+                            console.log(result[i].object_name);
                             connection.query("UPDATE object SET object_state = 1 WHERE object_name = ?", result[i].object_name, function(error, rows){ 
                                 if(error){ 
                                     throw error;

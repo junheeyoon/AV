@@ -211,6 +211,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun trunOffLights() {
+        val bridge = phHueSDK!!.selectedBridge
+        val allLights = bridge.resourceCache.allLights
+        for (light in allLights) {
+            System.out.println(light);
+            val lightState = PHLightState()
+            lightState.isOn = false
+            bridge.updateLightState(light, lightState, listener)
+        }
+    }
+
+    fun trunOnLights() {
+        val bridge = phHueSDK!!.selectedBridge
+
+        val allLights = bridge.resourceCache.allLights
+        for (light in allLights) {
+            val lightState = PHLightState()
+            lightState.isOn = true
+            bridge.updateLightState(light, lightState, listener)
+        }
+    }
+
     fun trunOffLights0() {
         val bridge = phHueSDK!!.selectedBridge
 

@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
                     textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
                     // IOT
-                    trunOnLights()
+                    trunOnLights2()
                 }
                 override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
 
@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
                     textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
                     // IOT
-                    trunOffLights()
+                    trunOffLights2()
                 }
                 override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
 
@@ -211,26 +211,75 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun trunOffLights() {
+    fun trunOffLights0() {
         val bridge = phHueSDK!!.selectedBridge
 
         val allLights = bridge.resourceCache.allLights
-        for (light in allLights) {
-            val lightState = PHLightState()
-            lightState.isOn = false
-            bridge.updateLightState(light, lightState, listener)
-        }
+        val lightState = PHLightState()
+        lightState.isOn = false
+        bridge.updateLightState(allLights[0], lightState, listener)
+    }
+    fun trunOffLights1() {
+        val bridge = phHueSDK!!.selectedBridge
+
+        val allLights = bridge.resourceCache.allLights
+        val lightState = PHLightState()
+        lightState.isOn = false
+        bridge.updateLightState(allLights[1], lightState, listener)
+    }
+    fun trunOffLights2() {
+        val bridge = phHueSDK!!.selectedBridge
+
+        val allLights = bridge.resourceCache.allLights
+
+        val lightState = PHLightState()
+        lightState.isOn = false
+        bridge.updateLightState(allLights[2], lightState, listener)
+    }
+    fun trunOnLights0() {
+        val bridge = phHueSDK!!.selectedBridge
+
+        val allLights = bridge.resourceCache.allLights
+
+
+
+        //1 0 2 0이 가운데 1이 왼쪽 2가 오른쪽
+        val lightState = PHLightState()
+        lightState.isOn = true
+        bridge.updateLightState(allLights[0], lightState, listener)
+
+
     }
 
-    fun trunOnLights() {
+    fun trunOnLights1() {
         val bridge = phHueSDK!!.selectedBridge
 
         val allLights = bridge.resourceCache.allLights
-        for (light in allLights) {
+
+
+
+        //1 0 2 0이 가운데 1이 왼쪽 2가 오른쪽
+        val lightState = PHLightState()
+        lightState.isOn = true
+        bridge.updateLightState(allLights[1], lightState, listener)
+
+
+    }
+
+
+    fun trunOnLights2() {
+        val bridge = phHueSDK!!.selectedBridge
+
+        val allLights = bridge.resourceCache.allLights
+
+
+
+             //1 0 2 0이 가운데 1이 왼쪽 2가 오른쪽
             val lightState = PHLightState()
             lightState.isOn = true
-            bridge.updateLightState(light, lightState, listener)
-        }
+            bridge.updateLightState(allLights[2], lightState, listener)
+
+
     }
 
     @Suppress("DEPRECATION")
@@ -247,13 +296,34 @@ class MainActivity : AppCompatActivity() {
             if(rs[0].toString().startsWith("화상")){
                 bt!!.send("Text", true)
             } else {
-                if(rs[0].toString().contains("관리자")) {
+                if(rs[0].toString().contains("자")) {
                     if (rs[0].toString().contains("켜")) {
-                        textToSpeech!!.speak("관리자님의 요청으로 전등이 켜졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
-                        trunOnLights()
+                        if(rs[0].toString().contains("거실")){
+                            textToSpeech!!.speak("관리자님의 요청으로 거실불이 켜졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
+                            trunOnLights0()
+                        }
+                        if(rs[0].toString().contains("방")){
+                            textToSpeech!!.speak("관리자님의 요청으로 방불이 켜졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
+                            trunOnLights1()
+                        }
+                        if(rs[0].toString().contains("화장")){
+                            textToSpeech!!.speak("관리자님의 요청으로 화장실 불이 켜졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
+                            trunOnLights2()
+                        }
+
                     } else if (rs[0].toString().contains("꺼")) {
-                        textToSpeech!!.speak("관리자님의 요청으로 전등이 꺼졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
-                        trunOffLights()
+                        if(rs[0].toString().contains("거실")){
+                            textToSpeech!!.speak("관리자님의 요청으로 거실불이 꺼졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
+                            trunOffLights0()
+                        }
+                        if(rs[0].toString().contains("방")){
+                            textToSpeech!!.speak("관리자님의 요청으로 방불이 꺼졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
+                            trunOffLights1()
+                        }
+                        if(rs[0].toString().contains("화장")){
+                            textToSpeech!!.speak("관리자님의 요청으로 화장실 불이 꺼졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
+                            trunOffLights2()
+                        }
                     } else {
                         textToSpeech!!.speak("다시 한 번 명령해 주세요",TextToSpeech.QUEUE_FLUSH, null)
                     }

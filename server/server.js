@@ -231,6 +231,7 @@ server.delete('/device/:object_name', function (req, res, next) {
             console.log("쿼리문에 오류가 있습니다.");
         }
         else{
+            //eeee
             console.log('Access');
             console.log(result);
             for(i = 0; i < result.length; i++){

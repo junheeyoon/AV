@@ -148,7 +148,7 @@ server.post('/device/', function (req, res, next) {
             }
             console.log(sum);            
         }
-        console.log(final);
+        console.log('final');
     });
     console.log(sum)
     post_id = 3 - sum;

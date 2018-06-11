@@ -23,13 +23,15 @@ import java.util.*
 import app.akexorcist.bluetotohspp.library.BluetoothSPP
 import android.widget.Toast
 import app.akexorcist.bluetotohspp.library.BluetoothState
+import com.av.ajouuniv.avproject2.data.NetworkExample1
+import com.av.ajouuniv.avproject2.data.NetworkExample2
 import com.philips.lighting.hue.listener.PHLightListener
 import com.philips.lighting.hue.sdk.PHHueSDK
 import com.philips.lighting.model.PHBridgeResource
 import com.philips.lighting.model.PHHueError
 import com.philips.lighting.model.PHLight
 import com.philips.lighting.model.PHLightState
-
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -211,26 +213,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun trunOffLights() {
+    fun trunOffLights( i : Int) {
         val bridge = phHueSDK!!.selectedBridge
         val allLights = bridge.resourceCache.allLights
-        for (light in allLights) {
-            System.out.println(light);
+
             val lightState = PHLightState()
             lightState.isOn = false
-            bridge.updateLightState(light, lightState, listener)
-        }
+            bridge.updateLightState(allLights[i], lightState, listener)
+
     }
 
-    fun trunOnLights() {
+    fun trunOnLights( i : Int) {
         val bridge = phHueSDK!!.selectedBridge
 
         val allLights = bridge.resourceCache.allLights
-        for (light in allLights) {
             val lightState = PHLightState()
             lightState.isOn = true
-            bridge.updateLightState(light, lightState, listener)
-        }
+            bridge.updateLightState(allLights[i], lightState, listener)
+
     }
 
     fun trunOffLights0() {
@@ -305,6 +305,36 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Suppress("DEPRECATION")
+    private val postSpeechToTextListener = object : RecognitionListener {
+        override fun onRmsChanged(rmsdB: Float) {}
+        override fun onResults(results: Bundle) {
+            var key = ""
+            key = SpeechRecognizer.RESULTS_RECOGNITION
+            val mResult = results.getStringArrayList(key)
+            val rs = arrayOfNulls<String>(mResult.size)
+            mResult.toArray(rs)
+            updateStatus(rs[0])
+            val call = apiService!!.postDevice(rs[0].toString())
+            call.enqueue(object : Callback<NetworkExample2> {
+                override fun onResponse(call: Call<NetworkExample2>, response: Response<NetworkExample2>) {
+                    updateServerStatus(response.body().isOk.toString())
+                    textToSpeech!!.speak(response.body().message, TextToSpeech.QUEUE_FLUSH, null)
+                }
+                override fun onFailure(call: Call<NetworkExample2>, t: Throwable) {
+                    updateServerStatus(t.toString())
+                }
+            })
+        }
+        override fun onReadyForSpeech(params: Bundle) {}
+        override fun onEndOfSpeech() {}
+        override fun onError(error: Int) {}
+        override fun onBeginningOfSpeech() {}
+        override fun onPartialResults(partialResults: Bundle) {}
+        override fun onEvent(eventType: Int, params: Bundle) {}
+        override fun onBufferReceived(buffer: ByteArray) {}
+    }
+
+    @Suppress("DEPRECATION")
     private val speechToTextListener = object : RecognitionListener {
         override fun onRmsChanged(rmsdB: Float) {}
         override fun onResults(results: Bundle) {
@@ -315,60 +345,83 @@ class MainActivity : AppCompatActivity() {
             mResult.toArray(rs)
             updateStatus(rs[0])
 
-            if(rs[0].toString().startsWith("화상")){
-                bt!!.send("Text", true)
-            } else {
-                if(rs[0].toString().contains("자")) {
-                    if (rs[0].toString().contains("켜")) {
-                        if(rs[0].toString().contains("거실")){
-                            textToSpeech!!.speak("관리자님의 요청으로 거실불이 켜졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
-                            trunOnLights0()
-                        }
-                        if(rs[0].toString().contains("방")){
-                            textToSpeech!!.speak("관리자님의 요청으로 방불이 켜졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
-                            trunOnLights1()
-                        }
-                        if(rs[0].toString().contains("화장")){
-                            textToSpeech!!.speak("관리자님의 요청으로 화장실 불이 켜졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
-                            trunOnLights2()
-                        }
-
-                    } else if (rs[0].toString().contains("꺼")) {
-                        if(rs[0].toString().contains("거실")){
-                            textToSpeech!!.speak("관리자님의 요청으로 거실불이 꺼졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
-                            trunOffLights0()
-                        }
-                        if(rs[0].toString().contains("방")){
-                            textToSpeech!!.speak("관리자님의 요청으로 방불이 꺼졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
-                            trunOffLights1()
-                        }
-                        if(rs[0].toString().contains("화장")){
-                            textToSpeech!!.speak("관리자님의 요청으로 화장실 불이 꺼졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
-                            trunOffLights2()
-                        }
-                    } else {
-                        textToSpeech!!.speak("다시 한 번 명령해 주세요",TextToSpeech.QUEUE_FLUSH, null)
-                    }
-                } else {
-                    textToSpeech!!.speak("관리자가 아닙니다? 누구냐? 너?",TextToSpeech.QUEUE_FLUSH, null)
-                }
-//                val call = apiService!!.updateDevice(rs[0].toString())
-//                call.enqueue(object : Callback<NetworkExample> {
-//                    override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
-//                        updateServerStatus(response.body().isOk.toString())
-//                        textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
-//                        // IOT
-//                        if(response.body().isOk){
-//                            trunOnLights()
-//                            randomLights()
-//                        } else {
-//                            trunOffLights()
+//            if(rs[0].toString().startsWith("화상")){
+//                bt!!.send("Text", true)
+//            } else {
+//                if(rs[0].toString().contains("자")) {
+//                    if (rs[0].toString().contains("켜")) {
+//                        if(rs[0].toString().contains("거실")){
+//                            textToSpeech!!.speak("관리자님의 요청으로 거실불이 켜졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
+//                            trunOnLights0()
 //                        }
+//                        if(rs[0].toString().contains("방")){
+//                            textToSpeech!!.speak("관리자님의 요청으로 방불이 켜졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
+//                            trunOnLights1()
+//                        }
+//                        if(rs[0].toString().contains("화장")){
+//                            textToSpeech!!.speak("관리자님의 요청으로 화장실 불이 켜졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
+//                            trunOnLights2()
+//                        }
+//
+//                    } else if (rs[0].toString().contains("꺼")) {
+//                        if(rs[0].toString().contains("거실")){
+//                            textToSpeech!!.speak("관리자님의 요청으로 거실불이 꺼졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
+//                            trunOffLights0()
+//                        }
+//                        if(rs[0].toString().contains("방")){
+//                            textToSpeech!!.speak("관리자님의 요청으로 방불이 꺼졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
+//                            trunOffLights1()
+//                        }
+//                        if(rs[0].toString().contains("화장")){
+//                            textToSpeech!!.speak("관리자님의 요청으로 화장실 불이 꺼졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
+//                            trunOffLights2()
+//                        }
+//                    } else {
+//                        textToSpeech!!.speak("다시 한 번 명령해 주세요",TextToSpeech.QUEUE_FLUSH, null)
 //                    }
-//                    override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
-//                        updateServerStatus(t.toString())
-//                    }
-//                })
+//                } else {
+//                    textToSpeech!!.speak("관리자가 아닙니다? 누구냐? 너?",TextToSpeech.QUEUE_FLUSH, null)
+//                }
+            if(rs[0].toString().contains("등록")) {
+
+                textToSpeech!!.speak("시리얼 넘버를 말해주세요.", TextToSpeech.QUEUE_FLUSH, null)
+                TimeUnit.SECONDS.sleep(4);
+                textToSpeech!!.speak("디바이스 이름을 말해주세요.", TextToSpeech.QUEUE_FLUSH, null)
+                speechToText()
+            }
+            else if(rs[0].toString().contains("삭제")) {
+                val call = apiService!!.deleteDevice(rs[0].toString())
+                call.enqueue(object : Callback<NetworkExample1> {
+                    override fun onResponse(call: Call<NetworkExample1>, response: Response<NetworkExample1>) {
+                        updateServerStatus(response.body().isOk.toString())
+                        textToSpeech!!.speak(response.body().message, TextToSpeech.QUEUE_FLUSH, null)
+                    }
+                    override fun onFailure(call: Call<NetworkExample1>, t: Throwable) {
+                        updateServerStatus(t.toString())
+                    }
+                })
+            }
+            else{
+
+                val call = apiService!!.updateDevice(rs[0].toString())
+                call.enqueue(object : Callback<NetworkExample> {
+                    override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
+                        updateServerStatus(response.body().isOk.toString())
+                        textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
+                        // IOT
+                        var d_id = response.body().device_id;
+                        if(response.body().isOk){
+
+                            trunOnLights(d_id)
+                            //randomLights()
+                        } else {
+                            trunOffLights(d_id)
+                        }
+                    }
+                    override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
+                        updateServerStatus(t.toString())
+                    }
+                })
             }
         }
         override fun onReadyForSpeech(params: Bundle) {}
@@ -392,6 +445,16 @@ class MainActivity : AppCompatActivity() {
             val labelView = findViewById<TextView>(R.id.server_text)
             labelView.text = status
         }
+    }
+
+    fun speechToText(){
+        val i = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)            //음성인식 intent생성
+        i.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)    //데이터 설정
+        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
+        i.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)//음성인식 언어 설정
+        mRecognizer = SpeechRecognizer.createSpeechRecognizer(this)                //음성인식 객체
+        mRecognizer?.setRecognitionListener(postSpeechToTextListener)                                        //음성인식 리스너 등록
+        mRecognizer?.startListening(i)
     }
 
 

@@ -149,24 +149,26 @@ server.post('/device/', function (req, res, next) {
             console.log('sum' + sum);
             kk = sum;            
         }
+        post_id = 3 - sum;
+        let sql = "INSERT INTO object (object_id, object_state, object_name) VALUES (?, ?, ?)";
+        connection.query(sql, [ post_id,0,body.message ], function(err, rows) {
+            if(err){
+                console.log(err);
+                console.log("쿼리문에 오류가 있습니다.");
+            }
+            else{
+                console.log('응답성공');
+                res.json({
+                        isOk : true, 
+                        message : '디바이스가 등록되었습니다.'
+                });
+            }
+        });
         console.log('final' + kk);
     });
     console.log('fuck' + sum)
-    post_id = 3 - sum;
-    let sql = "INSERT INTO object (object_id, object_state, object_name) VALUES (?, ?, ?)";
-    connection.query(sql, [ post_id,0,body.message ], function(err, rows) {
-        if(err){
-            console.log(err);
-            console.log("쿼리문에 오류가 있습니다.");
-        }
-        else{
-            console.log('응답성공');
-            res.json({
-                        isOk : true, 
-                        message : '디바이스가 등록되었습니다.'
-            });
-        }
-    });
+    
+    
 });
 
 server.delete('/user/:user_name', function (req, res, next) {

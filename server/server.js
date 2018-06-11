@@ -126,7 +126,7 @@ server.post('/user/', function (req, res, next) {
         }
     });
 }); 
-
+var kk;
 server.post('/device/', function (req, res, next) {
     var j;
     var body = req.body;
@@ -146,9 +146,10 @@ server.post('/device/', function (req, res, next) {
                 console.log(result[j].object_id);
                 sum = sum + result[j].object_id;
             }
-            console.log('sum' + sum);            
+            console.log('sum' + sum);
+            kk = sum;            
         }
-        console.log('final' + sum);
+        console.log('final' + kk);
     });
     console.log('fuck' + sum)
     post_id = 3 - sum;

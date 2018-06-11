@@ -232,10 +232,11 @@ server.delete('/user/:user_name', function (req, res, next) {
     // });
 }); 
 
-server.delete('/device/', function (req, res, next) {
+server.put('/device/', function (req, res, next) {
     var i = 0;
     var name;
     var body = req.body;
+    
     connection.query("SELECT * FROM object", function(err, result, fields){
         if(err){
             console.log(err);
@@ -250,8 +251,8 @@ server.delete('/device/', function (req, res, next) {
                 for(i = 0; i < result.length; i++){
                     name = body.message.indexOf(result[i].object_name);
                     if(parseInt(name) !== -1){
-                        if(parseInt(body.name.indexOf('삭제')) !== -1){
-                            connection.query("DELETE * FROM object WHERE object_name = ?", name, function(error, rows){ 
+                        if(parseInt(body.message.indexOf('삭제')) !== -1){
+                            connection.query("DELETE * FROM object WHERE object_name = ?", result[i].object_name, function(error, rows){ 
                                 if(error){ 
                                     throw error;
                                 }	

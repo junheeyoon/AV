@@ -132,6 +132,7 @@ server.post('/device/', function (req, res, next) {
     var body = req.body;
     var sum = 0;
     var post_id;
+    console.log(body)
     
     connection.query("SELECT * FROM object", function(err, result, fields){
         if(err){

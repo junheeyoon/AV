@@ -153,7 +153,7 @@ server.post('/device/', function (req, res, next) {
     console.log(sum)
     post_id = 3 - sum;
     console.log('p_id:' + post_id);
-    var post_body = "('"+post_id+"','"+0+"','"+body.message+"');"
+    var post_body = (post_id, 0, body.message);
     connection.query("INSERT INTO object(object_id, object_state, object_name) VALUES ?", post_body, function(err, result, fields){
         if(err){
             console.log(err);

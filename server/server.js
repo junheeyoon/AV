@@ -252,7 +252,7 @@ server.put('/device/', function (req, res, next) {
                     name = body.message.indexOf(result[i].object_name);
                     if(parseInt(name) !== -1){
                         if(parseInt(body.message.indexOf('삭제')) !== -1){
-                            connection.query("DELETE * FROM object WHERE object_name = ?", result[i].object_name, function(error, rows){ 
+                            connection.query("DELETE FROM object WHERE object_name = ?", result[i].object_name, function(error, rows){ 
                                 if(error){ 
                                     throw error;
                                 }	
@@ -262,7 +262,7 @@ server.put('/device/', function (req, res, next) {
                             });
                             res.json({
                                 isOk : true,
-                                message : result[i].object_name + '가 삭제되었습니다.'
+                                message : result[i].object_name + '이 삭제되었습니다.'
                             });
                         }                  
                         else {

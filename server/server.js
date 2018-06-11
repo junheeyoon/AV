@@ -126,11 +126,11 @@ server.post('/user/', function (req, res, next) {
         }
     });
 }); 
-
+var sum = 0;
 server.post('/device/', function (req, res, next) {
     var j;
     var body = req.body;
-    var sum = 0;
+    
     var post_id;
     console.log(body)
     
@@ -153,8 +153,8 @@ server.post('/device/', function (req, res, next) {
     console.log(sum)
     post_id = 3 - sum;
     console.log('p_id:' + post_id);
-    var post_body = [post_id, 0, body.message];
-    connection.query("INSERT INTO object(object_id, object_state, object_name) VALUES ?,?,?", post_id, 0, body.message, function(err, result, fields){
+    var post_body = post_id+","+0+","+body.message
+    connection.query("INSERT INTO object(object_id, object_state, object_name) VALUES ?", post_body, function(err, result, fields){
         if(err){
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");

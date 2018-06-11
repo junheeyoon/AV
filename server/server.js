@@ -126,14 +126,14 @@ server.post('/user/', function (req, res, next) {
         }
     });
 }); 
-var sum = 0;
+
 server.post('/device/', function (req, res, next) {
     var j;
     var body = req.body;
     
     var post_id;
     console.log(body)
-    
+    var sum = 0;    
     connection.query("SELECT * FROM object", function(err, result, fields){
         if(err){
             console.log(err);
@@ -146,11 +146,11 @@ server.post('/device/', function (req, res, next) {
                 console.log(result[j].object_id);
                 sum = sum + result[j].object_id;
             }
-            console.log(sum);            
+            console.log('sum' + sum);            
         }
-        console.log('final');
+        console.log('final' + sum);
     });
-    console.log(sum)
+    console.log('fuck' + sum)
     post_id = 3 - sum;
     let sql = "INSERT INTO object (object_id, object_state, object_name) VALUES (?, ?, ?)";
     connection.query(sql, [ post_id,0,body.message ], function(err, rows) {

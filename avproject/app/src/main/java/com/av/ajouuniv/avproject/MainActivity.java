@@ -1,8 +1,11 @@
 package com.av.ajouuniv.avproject;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private BluetoothSPP bt;
+    public static Context mContext;
 
     @BindView(R.id.hang_up) Button mHangUp;
     @BindView(R.id.toggle_speaker) Button mToggleSpeaker;
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mContext = this;
 
         startService(new Intent(this, CallMonitorService.class));
 
@@ -81,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 Linphone.toggleMicro(false);
                 mToggleSpeaker.setVisibility(View.VISIBLE);
                 mToggleMute.setVisibility(View.VISIBLE);
-                bt.send("Text", true);
+                btSend();
             }
 
             @Override
@@ -122,5 +127,21 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.toggle_speaker)
     public void toggleSpeaker() {
         Linphone.toggleSpeaker(!Linphone.getLC().isSpeakerEnabled());
+    }
+
+    public void btSend(){
+        final AudioManager audioManager = (AudioManager)getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        final Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                audioManager.setMode(AudioManager.MODE_IN_CALL);
+                if(!audioManager.isSpeakerphoneOn())
+                    audioManager.setSpeakerphoneOn(true);
+                if(audioManager.isMicrophoneMute())
+                    audioManager.setMicrophoneMute(false);
+                bt.send("Text", true);
+            }
+        }, 1500);
     }
 }

@@ -84,7 +84,7 @@ public class CallMonitorService extends Service {
         try {
             if (mCallMediaController != null) {
                 mCallMediaController.dispatchMediaButtonEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_HEADSETHOOK));
-
+                ((MainActivity)MainActivity.mContext).btSend();
             }
         } catch (SecurityException e) {
             Log.e(getClass().getSimpleName(), "Permission error. ", e);

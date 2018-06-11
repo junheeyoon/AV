@@ -128,26 +128,37 @@ server.post('/user/', function (req, res, next) {
 }); 
 
 server.post('/device/', function (req, res, next) {
+    var j;
     var body = req.body;
-    connection.query("INSERT INTO user SET ?", body, function(err, result, fields){
+    var sum = 0;
+    var post_id;
+    
+    connection.query("SELECT * FROM object", function(err, result, fields){
         if(err){
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");
-            res.json({
-                result : {
-                        isOk : false, 
-                        error : "쿼리문에 오류가 있습니다."
-                }
-            });
+        }
+        else{
+            console.log('Access');
+            console.log(result);
+            for(j = 0; j < result.length; j++){
+                sum = sum + result[j].object_id;
+            }            
+        }
+    });
+    post_id = 3 - sum;
+    var post_body = [post_id, 0, body.message];
+    connection.query("INSERT INTO object(object_id, object_state, object_name) VALUES ?", post_body, function(err, result, fields){
+        if(err){
+            console.log(err);
+            console.log("쿼리문에 오류가 있습니다.");
         }
         else{
             console.log('Access');
             console.log(result);
             res.json({
-                result : {
                         isOk : true, 
                         message : '디바이스가 등록되었습니다.'
-                }
             });
         }
     });
@@ -221,7 +232,7 @@ server.delete('/user/:user_name', function (req, res, next) {
     // });
 }); 
 
-server.delete('/device/:object_name', function (req, res, next) {
+server.delete('/device/', function (req, res, next) {
     var i = 0;
     var name;
     var body = req.body;
@@ -234,35 +245,52 @@ server.delete('/device/:object_name', function (req, res, next) {
             //eeee
             console.log('Access');
             console.log(result);
-            for(i = 0; i < result.length; i++){
-                name = body.name.indexOf(result[i].object_name);
-                if(parseInt(name) !== -1){
-                    if(parseInt(body.name.indexOf('삭제')) !== -1){
-                        connection.query("DELETE * FROM object WHERE object_name = ?", name, function(error, rows){ 
-                            if(error){ 
-                                throw error;
-                            }	
-                            else{ 
-                                console.log(rows); 
-                            } 
-                        });
-                        res.json({
-                            isOk : true,
-                            message : result[i].object_name + '가 삭제되었습니다.'
-                        });
-                    }                  
-                    else {
-                        res.json({
-                            isOk : false, 
-                            error : '명령을 확인해주세요.'
-                        });
+            if(parseInt(body.message.indexOf('관리자')) !== -1){
+            
+                for(i = 0; i < result.length; i++){
+                    name = body.message.indexOf(result[i].object_name);
+                    if(parseInt(name) !== -1){
+                        if(parseInt(body.name.indexOf('삭제')) !== -1){
+                            connection.query("DELETE * FROM object WHERE object_name = ?", name, function(error, rows){ 
+                                if(error){ 
+                                    throw error;
+                                }	
+                                else{ 
+                                    console.log(rows); 
+                                } 
+                            });
+                            res.json({
+                                isOk : true,
+                                message : result[i].object_name + '가 삭제되었습니다.'
+                            });
+                        }                  
+                        else {
+                            res.json({
+                                isOk : false, 
+                                error : '명령을 다시 확인해주세요.'
+                            });
+                        }
                     }
                 }
+            
             }
-            res.json({
-                isOk : false, 
-                error : 'object가 존재하지 않습니다.'
-            });
+            else if(i === result.length){
+                res.json({
+                                
+                        isOk : false, 
+                        message : '디바이스가 없습니다. 다시한번 확인해주세요.'
+                
+                });
+                
+            } 
+            else {
+                res.json({
+            
+                    isOk : false, 
+                    message : '관리자가 아닙니다.'
+            
+                });
+            }
         }
     });
 });    
@@ -291,7 +319,7 @@ server.put('/state/', function (req, res, next) {
     var i = 0;
     var name;
     var body = req.body;
-    body.message = "관리자인데 전등좀 켜줘";
+    //body.message = "관리자인데 전등좀 켜줘";
     connection.query("SELECT * FROM object", function(err, result, fields){
         if(err){
             console.log(err);
@@ -345,7 +373,8 @@ server.put('/state/', function (req, res, next) {
                             console.log(4);
                             res.json({
                                         isOk : true,
-                                        message :  result[i].object_name + '이 켜졌습니다.'
+                                        message :  result[i].object_name + '이 켜졌습니다.',
+                                        device_id : result[i].object_id
                                         //state : result[i].object_state
                                 
                             });
@@ -363,7 +392,8 @@ server.put('/state/', function (req, res, next) {
                             res.json({
                                 
                                         isOk : false,
-                                        message :  result[i].object_name + '이 꺼졌습니다.'
+                                        message :  result[i].object_name + '이 꺼졌습니다.',
+                                        device_id : result[i].object_id
                                         //state : result[i].object_state
                                 
                             });
@@ -383,7 +413,7 @@ server.put('/state/', function (req, res, next) {
                 res.json({
                                 
                         isOk : false, 
-                        message : '다시 명령을 해주세요.'
+                        message : '등록되어있지 않은 디바이스입니다. 확인해주세요.'
                 
                 });
                 

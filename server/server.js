@@ -142,6 +142,7 @@ server.post('/device/', function (req, res, next) {
             console.log('Access');
             console.log(result);
             for(j = 0; j < result.length; j++){
+                console.log(result[j].object_id);
                 sum = sum + result[j].object_id;
             }            
         }

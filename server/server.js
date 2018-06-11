@@ -159,8 +159,8 @@ server.post('/device/', function (req, res, next) {
             console.log("쿼리문에 오류가 있습니다.");
         }
         else{
-            console.log('Access');
-            console.log(result);
+            console.log('응답성공');
+            //console.log(result);
             res.json({
                         isOk : true, 
                         message : '디바이스가 등록되었습니다.'

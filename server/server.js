@@ -152,15 +152,14 @@ server.post('/device/', function (req, res, next) {
     });
     console.log(sum)
     post_id = 3 - sum;
-    console.log('p_id:' + post_id);
-    connection.query("INSERT INTO object (object_id, object_state, object_name) VALUES (?,?,?)", post_id,0,body.message, function(err, result, fields){
+    let sql = "INSERT INTO object (object_id, object_state, object_name) VALUES (?, ?, ?)";
+    connection.query(sql, [ post_id,0,body.message ], function(err, rows) {
         if(err){
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");
         }
         else{
             console.log('응답성공');
-            //console.log(result);
             res.json({
                         isOk : true, 
                         message : '디바이스가 등록되었습니다.'

@@ -269,7 +269,7 @@ server.put('/device/', function (req, res, next) {
                             });
                             res.json({
                                 isOk : true,
-                                message : result[i].object_name + '이 삭제되었습니다.'
+                                message : result[i].object_name + '  삭제되었습니다.'
                             });
                         }                  
                         else {
@@ -381,7 +381,7 @@ server.put('/state/', function (req, res, next) {
                             console.log(4);
                             res.json({
                                         isOk : true,
-                                        message :  result[i].object_name + '이 켜졌습니다.',
+                                        message :  result[i].object_name + '  켜졌습니다.',
                                         device_id : result[i].object_id
                                         //state : result[i].object_state
                                 
@@ -400,7 +400,7 @@ server.put('/state/', function (req, res, next) {
                             res.json({
                                 
                                         isOk : false,
-                                        message :  result[i].object_name + '이 꺼졌습니다.',
+                                        message :  result[i].object_name + '   꺼졌습니다.',
                                         device_id : result[i].object_id
                                         //state : result[i].object_state
                                 

@@ -415,19 +415,29 @@ server.put('/state/', function (req, res, next) {
                             });
                         }
                     }                                        
-                }                                
-            }
-            else if(i === result.length){
-                res.json({
+                }
+                if(i == result.length){
+                    res.json({
                                 
                         isOk : false, 
                         message : '등록되어있지 않은 디바이스입니다. 확인해주세요.'
                 
-                });
-                console.log(res.body);
-                console.log('tteetsetest');
+                    });
+                    console.log(res.body);
+                    console.log('tteetsetest');
+                }                                
+            }
+            // else if(i == result.length){
+            //     res.json({
+                                
+            //             isOk : false, 
+            //             message : '등록되어있지 않은 디바이스입니다. 확인해주세요.'
                 
-            } 
+            //     });
+            //     console.log(res.body);
+            //     console.log('tteetsetest');
+                
+            // } 
             else {
                 res.json({
             

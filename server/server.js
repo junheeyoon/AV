@@ -275,7 +275,7 @@ server.put('/device/', function (req, res, next) {
                         else {
                             res.json({
                                 isOk : false, 
-                                error : '명령을 다시 확인해주세요.'
+                                message : '명령을 다시 확인해주세요.'
                             });
                         }
                     }
@@ -424,6 +424,8 @@ server.put('/state/', function (req, res, next) {
                         message : '등록되어있지 않은 디바이스입니다. 확인해주세요.'
                 
                 });
+                console.log(res.body);
+                console.log('tteetsetest');
                 
             } 
             else {

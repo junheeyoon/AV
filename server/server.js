@@ -253,7 +253,7 @@ server.put('/device/', function (req, res, next) {
             //eeee
             console.log('Access');
             console.log(result);
-            if(parseInt(body.message.indexOf('관리자')) !== -1){
+            if(parseInt(body.message.indexOf('자')) !== -1){
             
                 for(i = 0; i < result.length; i++){
                     name = body.message.indexOf(result[i].object_name);
@@ -336,7 +336,7 @@ server.put('/state/', function (req, res, next) {
         else {
             console.log('Access');
             console.log(result);
-            if(parseInt(body.message.indexOf('관리자')) !== -1){
+            if(parseInt(body.message.indexOf('자')) !== -1){
                 
                 for(i = 0; i < result.length; i++){
                     console.log(1);

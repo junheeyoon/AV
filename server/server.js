@@ -336,7 +336,7 @@ server.put('/state/', function (req, res, next) {
         else {
             console.log('Access');
             console.log(result);
-            //if(parseInt(body.message.indexOf('자')) !== -1){
+            if(parseInt(body.message.indexOf('자')) !== -1){
                 
                 for(i = 0; i < result.length; i++){
                     console.log(1);
@@ -426,7 +426,7 @@ server.put('/state/', function (req, res, next) {
                     console.log(res.body);
                     console.log('tteetsetest');
                 }                                
-            //}
+            }
             // else if(i == result.length){
             //     res.json({
                                 

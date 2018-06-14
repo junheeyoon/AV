@@ -102,27 +102,100 @@ server.get('/password/:user_id', function (req, res, next) {
 });
 
 server.post('/user/', function (req, res, next) {
+    var j;
     var body = req.body;
-    connection.query("INSERT INTO user SET ?", body, function(err, result, fields){
+    
+    var post_id;
+    console.log(body)
+    var sum = 0;    
+    connection.query("SELECT * FROM object", function(err, result, fields){
         if(err){
             console.log(err);
             console.log("쿼리문에 오류가 있습니다.");
-            res.json({
-                result : {
-                        isOk : false, 
-                        error : "쿼리문에 오류가 있습니다."
-                }
-            });
         }
         else{
+                        
+        }
+        
+        let sql = "UPDATE object SET pw = ?";
+        connection.query(sql, body.message, function(err, rows) {
+            if(err){
+                console.log(err);
+                console.log("쿼리문에 오류가 있습니다.");
+            }
+            else{
+                console.log('응답성공');
+                res.json({
+                        isOk : true, 
+                        message : '패스워드가 등록되었습니다.'
+                });
+            }
+        });
+        console.log('final' + kk);
+    });
+    console.log('fuck' + sum)
+    
+});
+server.put('/user/', function (req, res, next) {
+    var i = 0;
+    var name;
+    var body = req.body;
+    
+    connection.query("SELECT * FROM object", function(err, result, fields){
+        if(err){
+            console.log(err);
+            console.log("쿼리문에 오류가 있습니다.");
+        }
+        else{
+            //eeee
             console.log('Access');
             console.log(result);
-            res.json({
-                result : {
-                        isOk : true, 
-                        message : '사용자가 등록되었습니다.'
+            if(parseInt(body.message.indexOf(result[0].pw)) !== -1){
+            
+                for(i = 0; i < result.length; i++){
+                    name = body.message.indexOf(result[i].object_name);
+                    if(parseInt(name) !== -1){
+                        if(parseInt(body.message.indexOf('삭제')) !== -1){
+                            connection.query("UPDATE object SET pw = 0",  function(error, rows){ 
+                                if(error){ 
+                                    throw error;
+                                }	
+                                else{ 
+                                    console.log(rows); 
+                                } 
+                            });
+                            res.json({
+                                isOk : true,
+                                message : '패스워드가  삭제되었습니다.'
+                            });
+                        }                  
+                        else {
+                            res.json({
+                                isOk : false, 
+                                message : '명령을 다시 확인해주세요.'
+                            });
+                        }
+                    }
                 }
-            });
+            
+            }
+            else if(i === result.length){
+                res.json({
+                                
+                        isOk : false, 
+                        message : '패스워드가 아닙니다. 다시한번 확인해주세요.'
+                
+                });
+                
+            } 
+            else {
+                res.json({
+            
+                    isOk : false, 
+                    message : '관리자가 아닙니다.'
+            
+                });
+            }
         }
     });
 }); 
@@ -150,8 +223,8 @@ server.post('/device/', function (req, res, next) {
             kk = sum;            
         }
         post_id = 3 - sum;
-        let sql = "INSERT INTO object (object_id, object_state, object_name) VALUES (?, ?, ?)";
-        connection.query(sql, [ post_id,0,body.message ], function(err, rows) {
+        let sql = "INSERT INTO object (object_id, object_state, object_name, pw) VALUES (?, ?, ?, ?)";
+        connection.query(sql, [ post_id,0,body.message, result[0].pw ], function(err, rows) {
             if(err){
                 console.log(err);
                 console.log("쿼리문에 오류가 있습니다.");
@@ -336,7 +409,7 @@ server.put('/state/', function (req, res, next) {
         else {
             console.log('Access');
             console.log(result);
-            if(parseInt(body.message.indexOf('자')) !== -1){
+            if(parseInt(body.message.indexOf(result[i].pw)) !== -1){
                 
                 for(i = 0; i < result.length; i++){
                     console.log(1);

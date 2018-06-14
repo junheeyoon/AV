@@ -152,9 +152,7 @@ server.put('/user/', function (req, res, next) {
             console.log(result);
             if(parseInt(body.message.indexOf(result[0].pw)) !== -1){
             
-                for(i = 0; i < result.length; i++){
-                    name = body.message.indexOf(result[i].object_name);
-                    if(parseInt(name) !== -1){
+                
                         if(parseInt(body.message.indexOf('삭제')) !== -1){
                             connection.query("UPDATE object SET pw = 0",  function(error, rows){ 
                                 if(error){ 
@@ -175,9 +173,7 @@ server.put('/user/', function (req, res, next) {
                                 message : '명령을 다시 확인해주세요.'
                             });
                         }
-                    }
-                }
-            
+                
             }
             else if(i === result.length){
                 res.json({

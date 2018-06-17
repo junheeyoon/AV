@@ -335,6 +335,36 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Suppress("DEPRECATION")
+    private val userSpeechToTextListener = object : RecognitionListener {
+        override fun onRmsChanged(rmsdB: Float) {}
+        override fun onResults(results: Bundle) {
+            var key = ""
+            key = SpeechRecognizer.RESULTS_RECOGNITION
+            val mResult = results.getStringArrayList(key)
+            val rs = arrayOfNulls<String>(mResult.size)
+            mResult.toArray(rs)
+            updateStatus(rs[0])
+            val call = apiService!!.postUser(rs[0].toString())
+            call.enqueue(object : Callback<NetworkExample2> {
+                override fun onResponse(call: Call<NetworkExample2>, response: Response<NetworkExample2>) {
+                    updateServerStatus(response.body().isOk.toString())
+                    textToSpeech!!.speak(response.body().message, TextToSpeech.QUEUE_FLUSH, null)
+                }
+                override fun onFailure(call: Call<NetworkExample2>, t: Throwable) {
+                    updateServerStatus(t.toString())
+                }
+            })
+        }
+        override fun onReadyForSpeech(params: Bundle) {}
+        override fun onEndOfSpeech() {}
+        override fun onError(error: Int) {}
+        override fun onBeginningOfSpeech() {}
+        override fun onPartialResults(partialResults: Bundle) {}
+        override fun onEvent(eventType: Int, params: Bundle) {}
+        override fun onBufferReceived(buffer: ByteArray) {}
+    }
+
+    @Suppress("DEPRECATION")
     private val speechToTextListener = object : RecognitionListener {
         override fun onRmsChanged(rmsdB: Float) {}
         override fun onResults(results: Bundle) {
@@ -345,77 +375,60 @@ class MainActivity : AppCompatActivity() {
             mResult.toArray(rs)
             updateStatus(rs[0])
 
-//            if(rs[0].toString().startsWith("화상")){
-//                bt!!.send("Text", true)
-//            } else {
-//                if(rs[0].toString().contains("자")) {
-//                    if (rs[0].toString().contains("켜")) {
-//                        if(rs[0].toString().contains("거실")){
-//                            textToSpeech!!.speak("관리자님의 요청으로 거실불이 켜졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
-//                            trunOnLights0()
-//                        }
-//                        if(rs[0].toString().contains("방")){
-//                            textToSpeech!!.speak("관리자님의 요청으로 방불이 켜졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
-//                            trunOnLights1()
-//                        }
-//                        if(rs[0].toString().contains("화장")){
-//                            textToSpeech!!.speak("관리자님의 요청으로 화장실 불이 켜졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
-//                            trunOnLights2()
-//                        }
-//
-//                    } else if (rs[0].toString().contains("꺼")) {
-//                        if(rs[0].toString().contains("거실")){
-//                            textToSpeech!!.speak("관리자님의 요청으로 거실불이 꺼졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
-//                            trunOffLights0()
-//                        }
-//                        if(rs[0].toString().contains("방")){
-//                            textToSpeech!!.speak("관리자님의 요청으로 방불이 꺼졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
-//                            trunOffLights1()
-//                        }
-//                        if(rs[0].toString().contains("화장")){
-//                            textToSpeech!!.speak("관리자님의 요청으로 화장실 불이 꺼졌습니다!!",TextToSpeech.QUEUE_FLUSH, null)
-//                            trunOffLights2()
-//                        }
-//                    } else {
-//                        textToSpeech!!.speak("다시 한 번 명령해 주세요",TextToSpeech.QUEUE_FLUSH, null)
-//                    }
-//                } else {
-//                    textToSpeech!!.speak("관리자가 아닙니다? 누구냐? 너?",TextToSpeech.QUEUE_FLUSH, null)
-//                }
             if(rs[0].toString().contains("등록")) {
-
-                textToSpeech!!.speak("시리얼 넘버를 말해주세요.", TextToSpeech.QUEUE_FLUSH, null)
-                TimeUnit.SECONDS.sleep(4);
-                textToSpeech!!.speak("디바이스 이름을 말해주세요.", TextToSpeech.QUEUE_FLUSH, null)
-                speechToText()
+                if(rs[0].toString().contains("사용자")) {
+                    textToSpeech!!.speak("사용자 키워드를 말해주세요.", TextToSpeech.QUEUE_FLUSH, null)
+                    TimeUnit.SECONDS.sleep(3)
+                    userSpeechToText()
+                } else {
+                    textToSpeech!!.speak("시리얼 넘버를 말해주세요.", TextToSpeech.QUEUE_FLUSH, null)
+                    TimeUnit.SECONDS.sleep(3)
+                    textToSpeech!!.speak("디바이스 이름을 말해주세요.", TextToSpeech.QUEUE_FLUSH, null)
+                    TimeUnit.SECONDS.sleep(3)
+                    speechToText()
+                }
             }
             else if(rs[0].toString().contains("삭제")) {
-                val call = apiService!!.deleteDevice(rs[0].toString())
-                call.enqueue(object : Callback<NetworkExample1> {
-                    override fun onResponse(call: Call<NetworkExample1>, response: Response<NetworkExample1>) {
-                        updateServerStatus(response.body().isOk.toString())
-                        textToSpeech!!.speak(response.body().message, TextToSpeech.QUEUE_FLUSH, null)
-                    }
-                    override fun onFailure(call: Call<NetworkExample1>, t: Throwable) {
-                        updateServerStatus(t.toString())
-                    }
-                })
+                if(rs[0].toString().contains("사용자")) {
+                    val call = apiService!!.deleteUser(rs[0].toString())
+                    call.enqueue(object : Callback<NetworkExample1> {
+                        override fun onResponse(call: Call<NetworkExample1>, response: Response<NetworkExample1>) {
+                            updateServerStatus(response.body().isOk.toString())
+                            textToSpeech!!.speak(response.body().message, TextToSpeech.QUEUE_FLUSH, null)
+                        }
+
+                        override fun onFailure(call: Call<NetworkExample1>, t: Throwable) {
+                            updateServerStatus(t.toString())
+                        }
+                    })
+                } else {
+                    val call = apiService!!.deleteDevice(rs[0].toString())
+                    call.enqueue(object : Callback<NetworkExample1> {
+                        override fun onResponse(call: Call<NetworkExample1>, response: Response<NetworkExample1>) {
+                            updateServerStatus(response.body().isOk.toString())
+                            textToSpeech!!.speak(response.body().message, TextToSpeech.QUEUE_FLUSH, null)
+                        }
+
+                        override fun onFailure(call: Call<NetworkExample1>, t: Throwable) {
+                            updateServerStatus(t.toString())
+                        }
+                    })
+                }
             }
             else{
-
                 val call = apiService!!.updateDevice(rs[0].toString())
                 call.enqueue(object : Callback<NetworkExample> {
                     override fun onResponse(call: Call<NetworkExample>, response: Response<NetworkExample>) {
                         updateServerStatus(response.body().isOk.toString())
                         textToSpeech!!.speak(response.body().message,TextToSpeech.QUEUE_FLUSH, null)
                         // IOT
-                        var d_id = response.body().device_id;
+                        var d_id = response.body().device_id
                         if(response.body().isOk){
-
                             trunOnLights(d_id)
-                            //randomLights()
                         } else {
-                            trunOffLights(d_id)
+                            if(response.body().message.toString().contains("꺼")){
+                                trunOffLights(d_id)
+                            }
                         }
                     }
                     override fun onFailure(call: Call<NetworkExample>, t: Throwable) {
@@ -446,7 +459,6 @@ class MainActivity : AppCompatActivity() {
             labelView.text = status
         }
     }
-
     fun speechToText(){
         val i = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)            //음성인식 intent생성
         i.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)    //데이터 설정
@@ -456,8 +468,15 @@ class MainActivity : AppCompatActivity() {
         mRecognizer?.setRecognitionListener(postSpeechToTextListener)                                        //음성인식 리스너 등록
         mRecognizer?.startListening(i)
     }
-
-
+    fun userSpeechToText(){
+        val i = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)            //음성인식 intent생성
+        i.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)    //데이터 설정
+        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
+        i.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)//음성인식 언어 설정
+        mRecognizer = SpeechRecognizer.createSpeechRecognizer(this)                //음성인식 객체
+        mRecognizer?.setRecognitionListener(userSpeechToTextListener)                                        //음성인식 리스너 등록
+        mRecognizer?.startListening(i)
+    }
 
     companion object {
         private val MAX_HUE = 65535

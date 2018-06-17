@@ -18,15 +18,19 @@ interface ApiInterface {
     val user: Call<NetworkExample>
 
     @FormUrlEncoded
-    @POST("/test")
-    fun postUser(@Field("message") message: String): Call<NetworkExample>
+    @POST("/user")
+    fun postUser(@Field("message") message: String): Call<NetworkExample2>
+
+    @FormUrlEncoded
+    @PUT("/user")
+    fun deleteUser(@Field("message") message: String): Call<NetworkExample1>
 
     @FormUrlEncoded
     @PUT("/state")
     fun updateDevice(@Field("message") message: String): Call<NetworkExample>
 
     @FormUrlEncoded
-    @DELETE("/device")
+    @PUT("/device")
     fun deleteDevice(@Field("message") message: String): Call<NetworkExample1>
 
     @FormUrlEncoded

@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 mHangUp.setVisibility(View.VISIBLE);
             }
 
-            @Override
+                    @Override
             public void callConnected() {
                 super.callConnected();
                 //Linphone.toggleSpeaker(Linphone.getVideoEnabled());
